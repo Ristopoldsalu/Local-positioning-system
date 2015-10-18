@@ -1,0 +1,9 @@
+package ee.lps.service;
+
+import ee.lps.dto.BuildingDto;
+import org.springframework.transaction.annotation.Transactional;
+
+@Transactional(readOnly = true)
+public interface BuildingService {
+    BuildingDto getBuildingByMac(String macaddr);
+}

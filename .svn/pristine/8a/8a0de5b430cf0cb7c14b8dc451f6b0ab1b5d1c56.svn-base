@@ -1,0 +1,12 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<html>
+<jsp:include page="header.jsp"/>
+<body>
+    <h1>Sihtkoht valitud! Edu otsimisel tuba ${room.roomName}</h1>
+    <div id="testdiv">
+        <p>Veel pole midagi</p>
+    </div>
+</body>
+</html>

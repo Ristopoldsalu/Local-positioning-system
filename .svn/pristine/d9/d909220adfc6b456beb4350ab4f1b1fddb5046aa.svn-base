@@ -1,0 +1,24 @@
+package ee.lps;
+
+import org.mockito.ArgumentMatcher;
+
+import static org.mockito.Matchers.doubleThat;
+
+public class TestUtil {
+    public static ArgumentMatcher<Double> isInRange(double from, double to) {
+        if (from > to) throw new IllegalArgumentException("Argument \"from\" cannot exceed argument \"to\".");
+
+        return new ArgumentMatcher<Double>() {
+            @Override
+            public boolean matches(Object o) {
+                if (o == null || !(o instanceof Double)) return false;
+                double value = (Double) o;
+                return value >= from && value <= to;
+            }
+        };
+    }
+
+    public static double doubleThatIsInRange(double from, double to) {
+        return doubleThat(isInRange(from, to));
+    }
+}

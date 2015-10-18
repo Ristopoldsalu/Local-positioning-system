@@ -1,0 +1,34 @@
+-- Version 0.1.4
+-- @TeamGREEN - kustutasime constraint-id, parandasime vigu, lisasime Building table juurde
+
+CREATE TABLE Building
+(
+building_id SERIAL PRIMARY KEY,
+building_name TEXT NOT NULL
+);
+
+CREATE TABLE Floor
+(
+floor_id SERIAL PRIMARY KEY,
+floor_name TEXT,
+floor_number INT NOT NULL,
+building_id INT NOT NULL REFERENCES Building (building_id)
+);
+
+CREATE TABLE Beacon
+(
+beacon_id SERIAL PRIMARY KEY,
+beacon_location POINT NOT NULL,
+beacon_macaddr MACADDR UNIQUE,
+floor_id INT NOT NULL REFERENCES Floor (floor_id)
+);
+
+CREATE TABLE Room
+(
+room_id SERIAL PRIMARY KEY,
+room_name TEXT NOT NULL,
+room_number TEXT NOT NULL,
+room_polygon POLYGON NOT NULL,
+floor_id INT NOT NULL REFERENCES Floor (floor_id)
+);
+

@@ -1,0 +1,50 @@
+package ee.lps.service;
+
+import ee.lps.controller.BeaconMeasurement;
+import ee.lps.dto.RoomSectorDto;
+import ee.lps.model.Beacon;
+import ee.lps.repository.BeaconRepository;
+import ee.lps.repository.SectorRepository;
+import ee.lps.util.BluetoothUtil;
+import ee.lps.util.data.model.Point;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class SectorServiceImpl implements SectorService {
+    public static final int MIN_BEACONS_FOR_POS_CALC = 3;
+    @Autowired
+    private SectorRepository sectorRepository;
+
+    @Autowired
+    private BeaconRepository beaconRepository;
+
+    @Override
+    public RoomSectorDto findSectorBasedOnMeasurements(List<BeaconMeasurement> measurements) {
+        List<BeaconDistAndPos> beaconDistAndPosList = calculateBeaconDistancesAndPositions(measurements);
+        if (beaconDistAndPosList.size() < MIN_BEACONS_FOR_POS_CALC) return null;
+        return null;
+    }
+
+    private List<BeaconDistAndPos> calculateBeaconDistancesAndPositions(List<BeaconMeasurement> beaconMeasurements) {
+        List<BeaconDistAndPos> beaconDistanceAndPosList = new ArrayList<>(beaconMeasurements.size());
+        for (BeaconMeasurement measurement : beaconMeasurements) {
+            Beacon beacon = beaconRepository.findByMac(measurement.getMac());
+            if (beacon != null) {
+                BeaconDistAndPos distAndPos = new BeaconDistAndPos();
+                distAndPos.distance = BluetoothUtil.calculateDistance(measurement.getRssi(), beacon.getBeaconTx());
+                distAndPos.pos = beacon.getBeaconLocationAsPoint();
+                beaconDistanceAndPosList.add(distAndPos);
+            }
+        }
+        return beaconDistanceAndPosList;
+    }
+
+    private static class BeaconDistAndPos {
+        private double distance;
+        private Point pos;
+    }
+}

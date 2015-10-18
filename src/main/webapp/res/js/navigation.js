@@ -1,0 +1,215 @@
+var roomId;
+var disabilityToWalk;
+var atDestination = false;
+var lastScannedBeaconsClearTime = getCurrentTimeMillis();
+var scannedBeacons = [];
+var angleRads;
+var angleDelta = Math.PI / 3;
+var guideText = "";
+var centerAngle = 0;
+
+
+function getCurrentTimeMillis() {
+    return new Date().getTime();
+}
+
+function Beacon(mac, rssi) {
+    this.mac = mac;
+    this.rssi = rssi;
+}
+
+function clearScannedBeaconsArray() {
+    if (getCurrentTimeMillis() - lastScannedBeaconsClearTime > 5000) {
+        scannedBeacons = [];
+        lastScannedBeaconsClearTime = getCurrentTimeMillis();
+    }
+}
+
+function passMacRssiFromAndroid(mac, rssi, angle) {
+    clearScannedBeaconsArray();
+    angleRads = angle;
+    for (var beacon in scannedBeacons) if (beacon.mac == mac) {
+        beacon.rssi = rssi;
+        return;
+    }
+    scannedBeacons.push(new Beacon(mac, rssi));
+    if (getCurrentTimeMillis() - lastScannedBeaconsClearTime > 1000) navigationUpdate();
+}
+
+function getRoomIdFromURLParams() {
+    if (roomId === undefined) {
+        var uri = new Uri(window.location.href);
+        roomId = uri.getQueryParamValue("roomId");
+    }
+    return roomId;
+}
+
+function getDisabilityToWalkFromURLParams() {
+    if (disabilityToWalk == undefined) {
+        var uri = new Uri(window.location.href);
+        var disability = uri.getQueryParamValue("disabilityToWalk");
+        disabilityToWalk = disability == "true";
+    }
+    return disabilityToWalk;
+}
+
+function navigationUpdate() {
+    if (atDestination) return;
+    var destinationRoomId = getRoomIdFromURLParams();
+
+    $.ajax({
+        url: getContextPath() + "/room/find",
+        type: "post",
+        dataType: 'json',
+        data: JSON.stringify(scannedBeacons),
+        contentType: "application/json",
+        success: function (data) {
+            var room = data['value'];
+            if (room == null) {
+                showSearchingBeaconsMessage();
+                return;
+            }
+            removeSearchingBeaconsMessage();
+
+            atDestination = room.roomId == destinationRoomId;
+            if (!atDestination) giveNavigationGuidelines(room);
+            else showReachedDestinationMessage();
+        },
+        error: function (e) {
+            console.log(e);
+            showErrorMessage();
+        }
+    });
+}
+
+function showErrorMessage() {
+    $("#navigation").html('<div class="alert alert-danger">' +
+        '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
+        '<span class="sr-only">Error:</span> Failed to communicate with server.' +
+        '</div>');
+}
+
+function showReachedDestinationMessage() {
+    $("#navigation").html('<div><h2>Oled kohal!</h2></div>');
+    $("#destinationLabel").removeClass("label-info").addClass("label-success");
+    $("#guideline").html("");
+}
+
+function giveNavigationGuidelines(room) {
+    var pathPointId = room.corridorPathPointId;
+    $.ajax({
+        url: getContextPath() + "/guideline?fromPathPointId=" + pathPointId +
+            "&toRoomId=" + getRoomIdFromURLParams() + "&disabilityToWalk=" + getDisabilityToWalkFromURLParams(),
+        type: "get",
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (data) {
+            var pathpoints = data['value'];
+            if (pathpoints == null) {
+                showUnknownGuidelineMessage();
+                return
+            }
+
+            if (pathpoints.length == 0) {
+                showGuidelinesNotFoundMessage();
+                return
+            }
+            guideUser(pathpoints);
+            showCurrentAndNextPathPointMessage(pathpoints);
+        },
+        error: function (e) {
+            console.log(e);
+            showErrorMessage();
+        }
+    });
+}
+
+function showCurrentAndNextPathPointMessage(pathpoints) {
+    $("#navigation").html('<div class="alert alert-info" role="alert">' +
+        'Liigu ' + pathpoints[0].name + ' -> ' + pathpoints[1].name +
+        '.<br>' + guideText + '</div>');
+}
+
+function showSearchingBeaconsMessage() {
+    $("#searchmessage").html('<div class="alert alert-warning" role="alert"><img src="'
+        + getContextPath() + '/res/images/ajax-loader.gif" ' +
+        'class="img-responsive" style="width: 1.2em;height: 1.2em; display:inline;">' +
+        'Otsin majakaid... </div>');
+}
+
+function removeSearchingBeaconsMessage() {
+    $("#searchmessage").html("");
+}
+
+function showUnknownGuidelineMessage() {
+    $("#guideline").html('<div class="alert alert-danger">' +
+        '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
+        '<span class="sr-only">Error:</span> Server returned invalid guidelines.' +
+        '</div>');
+}
+
+function showGuidelinesNotFoundMessage() {
+    $("#guideline").html('<div class="alert alert-danger">' +
+        '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
+        '<span class="sr-only">Error:</span> Did not find any guidelines.' +
+        '</div>');
+}
+
+
+function guideUser(pathpoints) {
+    for (var index in pathpoints) {
+        var pathpoint = pathpoints[index];
+        console.log(pathpoint.x + " " + pathpoint.y + " " + pathpoint.pathPointId + " " + pathpoint.name);
+    }
+
+    if (pathpoints.length <= 1) return;
+
+
+    var angle1, angle2;
+    if (pathpoints.length > 2) {
+        angle1 = calcAngle(pathpoints[0], pathpoints[1]);
+        angle2 = calcAngle(pathpoints[1], pathpoints[2]);
+    } else if (pathpoints.length == 2) {
+        angle1 = calcAngle(pathpoints[0], pathpoints[1]);
+        angle2 = angle1; // says always go straight
+    } else if (pathpoints.length == 1) {
+        console.log("Should be at destination?");
+        return;
+    }
+    // If negative then right, if positive then left.
+    var dif = differenceBetweenAngles(angle1, angle2);
+
+    if (dif < -angleDelta) {
+        guideText = "Pööra järgmisest vasakule.";
+    } else if (dif > angleDelta) {
+        guideText = "Pööra järgmisest paremale.";
+    } else {
+        guideText = "Mine otse.";
+    }
+
+    centerAngle = angle2 + dif / 2;
+}
+
+function isAngleBetween(target, angle1, angle2) {
+    var targetDeg = parseInt(target * (180 / Math.PI));
+    var angle1Deg = parseInt(angle1 * (180 / Math.PI));
+    var angle2Deg = parseInt(angle2 * (180 / Math.PI));
+
+    var rAngle = ((angle2Deg - angle1Deg) % 360 + 360) % 360;
+    if (rAngle >= 180) {
+        var temp = angle1Deg;
+        angle1Deg = angle2Deg;
+        angle2Deg = temp;
+    }
+
+    if (angle1Deg <= angle2Deg) return targetDeg >= angle1Deg && targetDeg <= angle2Deg;
+    else return targetDeg >= angle1Deg || targetDeg <= angle2Deg;
+}
+
+function calcAngle(p1, p2) {
+    return (Math.atan2(p2.y - p1.y, p2.x - p1.x)) + Math.PI;
+}
+
+function differenceBetweenAngles(a1, a2) {
+    return a2 - a1;
+}

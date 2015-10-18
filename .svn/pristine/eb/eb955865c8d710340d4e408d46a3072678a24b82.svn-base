@@ -1,0 +1,10 @@
+package ee.lps.util.trilateration;
+
+public class BluetoothUtil {
+    /**
+     * Formula from StackOverFlow
+     */
+    public static Double calculateDistance(int bluetoothRssi, long BluetoothTxPower) {
+        return Math.pow(10D, ((double)(BluetoothTxPower - bluetoothRssi)) / 20);
+    }
+}

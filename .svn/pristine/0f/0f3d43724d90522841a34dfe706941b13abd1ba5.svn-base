@@ -1,0 +1,16 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<html>
+<body>
+<h1>
+    <c:choose>
+        <c:when test="${not empty building}">
+            Found building <c:out value="${building.buildingName}"/>
+        </c:when>
+        <c:otherwise>
+            Didn't find any building.
+        </c:otherwise>
+    </c:choose>
+</h1>
+</body>
+</html>

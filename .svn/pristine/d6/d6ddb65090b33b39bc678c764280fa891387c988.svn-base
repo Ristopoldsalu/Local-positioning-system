@@ -1,0 +1,36 @@
+package ee.lps.service;
+
+import ee.lps.dto.RoomDTO;
+import ee.lps.model.Beacon;
+import ee.lps.model.Room;
+import ee.lps.repository.BeaconRepository;
+import ee.lps.repository.RoomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
+
+import static java.util.stream.Collectors.toList;
+
+@Service
+public class RoomServiceImpl implements RoomService {
+    public static final int RSSI = -75;
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @Autowired
+    private BeaconRepository beaconRepository;
+
+    @Override
+    public RoomDTO findRoomById(Long roomId) {
+        Room room = roomRepository.findOne(roomId);
+        if (room == null) return null;
+        return new RoomDTO(room);
+    }
+
+    @Override
+    public List<RoomDTO> getRoomsByBuildingId(Long buildingId) {
+        return roomRepository.getRoomsByBuildingId(buildingId).stream().map(RoomDTO::new).collect(toList());
+    }
+}

@@ -1,0 +1,69 @@
+INSERT INTO building (building_id, building_name)
+    VALUES
+      (1 ,'Tammsaare ärikeskus'),
+      (2 ,'Rocca Al Mare keskus'),
+      (3 ,'Ülemiste keskus');
+
+INSERT INTO floor (floor_id, floor_name, floor_number, building_id)
+    VALUES
+      (1, '6th Floor', 6, 1),
+      (2, '3rd Floor', 7, 1),
+      (3, '7th Floor', 1, 2),
+      (4, '1st Floor', 1, 3);
+
+INSERT INTO RoomType(
+  roomtype_id, roomtype_name)
+VALUES (1, 'room'),
+  (2, 'hallway');
+
+INSERT INTO room (
+room_id, room_name, room_number, floor_id, roomtype_id)
+VALUES
+(1, 'Ehis', '1', 2, 1),
+(2, 'Star', '3', 2, 1),
+(3, 'Skais', '5', 2, 1),
+(4, 'Ants', '7', 2, 1),
+(5, 'Anneli', '9', 2, 1),
+(6, 'Laura', '12', 2, 1),
+(7, 'BS', '14', 2, 1),
+(8, 'Tallink', '15', 2, 1);
+
+
+INSERT INTO PathPoint(
+  pathpoint_id, pathpoint_location) VALUES
+  (1,'(2644,1579)'),
+  (2, '(1866,1895)'),
+  (3, '(1182,1827)'),
+  (4, '(705,1607)'),
+  (5, '(876,1315)'),
+  (6, '(1278,1459)'),
+  (7, '(1940,1425)'),
+  (8, '(2400,1231)'),
+  (9, '(2522,1371)'),
+  (10, '(2645,1299)');
+
+INSERT INTO beacon(
+beacon_id, beacon_macaddr, room_id, corridor_pathpoint_id)
+VALUES (1,'20:15:03:17:41:89', 1, 1),
+(2,'20:15:05:05:07:61', 2, 2),
+(3,'20:15:03:02:58:55', 3, 3),
+(4,'20:15:03:17:02:50', 4, 4),
+(5,'20:15:03:17:38:37', 5, 5),
+(6,'20:15:03:17:41:92', 6, 6),
+(7,'20:15:05:05:06:45', 7, 7),
+(8,'20:15:04:30:75:02',  8, 8);
+
+
+INSERT INTO path (path_id, pathpoint_id_start, pathpoint_id_end, path_handycap)
+    VALUES
+(1,1,9,TRUE),
+(2,1,2,TRUE),
+(3,2,3,FALSE),
+(4,3,6,TRUE),
+(5,3,4,TRUE),
+(6,4,5,TRUE),
+(7,5,6,TRUE),
+(8,6,7,TRUE),
+(9,7,8,TRUE),
+(10,8,9,TRUE),
+(11,9,10,TRUE);

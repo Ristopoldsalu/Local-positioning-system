@@ -1,0 +1,48 @@
+package ee.lps.model;
+
+import javax.persistence.*;
+
+import static javax.persistence.FetchType.*;
+
+@Entity
+@Table(name = "Sector")
+@NamedNativeQuery(name = "Sector.findIfMatches",
+        query = "SELECT * FROM Sector s WHERE s.sector_polygon @> point_in(textout (?1 || ',' || ?2))",
+        resultClass = Sector.class)
+public class Sector {
+    @Id
+    @GeneratedValue
+    @Column(name = "sector_id")
+    private Long sectorId;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
+
+    @Column(name = "sector_name")
+    private String sectorName;
+
+    public String getSectorName() {
+        return sectorName;
+    }
+
+    public void setSectorName(String sectorName) {
+        this.sectorName = sectorName;
+    }
+
+    public Long getSectorId() {
+        return sectorId;
+    }
+
+    public void setSectorId(Long sectorId) {
+        this.sectorId = sectorId;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+}

@@ -1,0 +1,29 @@
+package ee.lps.dto;
+
+public class BeaconMeasurementDto {
+    private String mac;
+    private int rssi;
+
+    public BeaconMeasurementDto() {}
+
+    public BeaconMeasurementDto(String mac, int rssi) {
+        this.mac = mac;
+        this.rssi = rssi;
+    }
+
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    public int getRssi() {
+        return rssi;
+    }
+
+    public void setRssi(int rssi) {
+        this.rssi = rssi;
+    }
+}

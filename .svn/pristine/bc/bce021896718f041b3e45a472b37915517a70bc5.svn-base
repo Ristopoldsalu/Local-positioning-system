@@ -1,0 +1,72 @@
+package ee.lps.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Beacon")
+public class Beacon {
+    @Id
+    @Column(name = "beacon_id")
+    private Long beaconId;
+    @Column(name = "beacon_location")
+    private String beaconLocation;
+    @Column(name = "beacon_macaddr")
+    private String beaconMACAddress;
+    @Id
+    @Column(name = "room_id")
+    private Long roomId;
+
+    public Beacon(Long beaconId, String beaconLocation, String beaconMACAddress, Long roomId) {
+        this.beaconId = beaconId;
+        this.beaconLocation = beaconLocation;
+        this.beaconMACAddress = beaconMACAddress;
+        this.roomId = roomId;
+    }
+
+    public Beacon() {}
+
+    public Long getBeaconId() {
+        return beaconId;
+    }
+
+    public void setBeaconId(Long beaconId) {
+        this.beaconId = beaconId;
+    }
+
+    public String getBeaconLocation() {
+        return beaconLocation;
+    }
+
+    public void setBeaconLocation(String beaconLocation) {
+        this.beaconLocation = beaconLocation;
+    }
+
+    public String getBeaconMACAddress() {
+        return beaconMACAddress;
+    }
+
+    public void setBeaconMACAddress(String beaconMACAddress) {
+        this.beaconMACAddress = beaconMACAddress;
+    }
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
+    }
+
+    @Override
+    public String toString() {
+        return "Beacon{" +
+                "beaconId=" + beaconId +
+                ", beaconLocation='" + beaconLocation + '\'' +
+                ", beaconMACAddress='" + beaconMACAddress + '\'' +
+                ", roomId=" + roomId +
+                '}';
+    }
+}

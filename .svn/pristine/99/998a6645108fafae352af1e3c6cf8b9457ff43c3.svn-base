@@ -1,0 +1,17 @@
+package ee.lps.util.trilateration;
+
+import org.junit.Test;
+
+import static ee.lps.util.trilateration.BluetoothUtil.*;
+import static junit.framework.TestCase.assertEquals;
+
+public class BluetoothUtilTest {
+    @Test
+    public void shouldCalculateDistanceCorrectly() throws Exception {
+        assertEquals(7.0, calculateDistance(-85, -65) / POINTS_PER_METER, 0.3);
+        assertEquals(5.0, calculateDistance(-81, -65) / POINTS_PER_METER, 0.3);
+        assertEquals(3.0, calculateDistance(-76, -65) / POINTS_PER_METER, 0.3);
+        assertEquals(2.0, calculateDistance(-70, -65) / POINTS_PER_METER, 0.3);
+        assertEquals(1.0, calculateDistance(-65, -65) / POINTS_PER_METER, 0.3);
+    }
+}

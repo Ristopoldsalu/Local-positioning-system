@@ -1,0 +1,73 @@
+var roomId;
+var atDestination = false;
+var lastScannedBeaconsClearTime = getCurrentTimeMillis();
+var scannedBeacons = [];
+
+function getCurrentTimeMillis() {
+    return new Date().getTime();
+}
+
+function Beacon(mac, rssi) {
+    this.mac = mac;
+    this.rssi = rssi;
+}
+
+function clearScannedBeaconsArray(){
+    if (getCurrentTimeMillis() - lastScannedBeaconsClearTime > 8000) {
+        scannedBeacons = [];
+        lastScannedBeaconsClearTime = getCurrentTimeMillis();
+        console.log("clears array");
+    }
+}
+
+function passMacRssiFromAndroid(mac, rssi) {
+    clearScannedBeaconsArray();
+    for(var beacon in scannedBeacons) if (beacon.mac == mac) {
+        beacon.rssi = rssi;
+        return;
+    }
+    scannedBeacons.push(new Beacon(mac, rssi));
+    navigationUpdate();
+}
+
+function getRoomId() {
+    if (roomId === undefined) {
+        var uri = new Uri(window.location.href);
+        roomId = uri.getQueryParamValue("roomId");
+    }
+    return roomId;
+}
+
+function navigationUpdate() {
+    if (atDestination) return;
+
+    console.log("Current room: " + getRoomId());
+    console.log("Scanned beacons: " + JSON.stringify(scannedBeacons));
+
+    $.ajax({
+        url: getContextPath() + "/room/sector/calculate",
+        type: "post",
+        dataType: 'json',
+        data: JSON.stringify(scannedBeacons),
+        contentType: "application/json",
+        success: function(data) {
+            var response = data['value'];
+            if (response == null) return;
+
+            atDestination = response.roomId == getRoomId();
+            if (!atDestination) {
+                $("#navigation").html('<div id="animated-example" class="animated bounce">' +
+                    '<h2>Oled ruumis ' + response.roomName + ', liigu edasi!</h2> ' + '</div>');
+            } else {
+                $("#navigation").html('<div><h2>Oled kohal!</h2></div>');
+            }
+        },
+        error: function (e) {
+            console.log(e);
+            $("#navigation").html('<div class="alert alert-danger">' +
+                '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
+                '<span class="sr-only">Error:</span> Failed to communicate with server.' +
+                '</div>');
+        }
+    });
+}

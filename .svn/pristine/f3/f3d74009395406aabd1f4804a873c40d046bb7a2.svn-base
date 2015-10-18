@@ -1,0 +1,13 @@
+1. Andmebaasi sättimine
+    1.1 Selleks, et muuta andmebaasi ühenduse sätteid, on vaja avada fail db-properties.xml,
+    mis asub src/main/webapp/WEB-INF kaustas.
+    1.2 Andmebaasil on vaja luua tabelid. SQL-skript koos CREATE lausetega asub /db kaustas.
+    Need laused on vaja käivitada andmebaasil. Testimiseks on soovitatav lisada suvalised read
+    kõigis tabelis.
+2. Serveri sättimine
+    2.1 Projekt on loodud Tomcat 7 serveri alusel. Teistel versioonidel projekt ei ole testitud
+    ja sellepärast on soovitatav kasutada Tomcat 7 serverit.
+3. Projekti käivitamine
+    3.1 Tuleb genereerida rakenduse war fail. Selleks saab kasutada Maven war target-it.
+
+// TODO: Tuleb lõpetada.

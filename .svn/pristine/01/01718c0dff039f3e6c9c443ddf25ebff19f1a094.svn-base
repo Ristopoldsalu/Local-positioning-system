@@ -1,0 +1,10 @@
+package ee.lps.util.trilateration;
+
+public class BluetoothUtil {
+    public static final double SIGNAL_PROP_CONST = 2.0;
+    public static final double POINTS_PER_METER = 52.2;
+
+    public static Double calculateDistance(int bluetoothRssi, long BluetoothTxPower) {
+        return Math.pow(10D, ((double)(BluetoothTxPower - bluetoothRssi)) / SIGNAL_PROP_CONST * 10) / POINTS_PER_METER;
+    }
+}

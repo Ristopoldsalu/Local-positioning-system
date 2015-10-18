@@ -1,0 +1,52 @@
+package ee.lps.model;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+
+@Entity
+@Table(name = "Floor")
+public class Floor implements Serializable {
+    @Id
+    @GeneratedValue
+    @Column(name = "floor_id")
+    private Long floorId;
+
+    @Column(name = "floor_name")
+    private String floorName;
+
+    @Column(name = "floor_number")
+    private Integer floorNumber;
+
+    public Floor() {}
+
+    public Floor(Long floorId, String floorName, Integer floorNumber) {
+        this.floorId = floorId;
+        this.floorName = floorName;
+        this.floorNumber = floorNumber;
+    }
+
+    public Long getFloorId() {
+        return floorId;
+    }
+
+    public void setFloorId(Long floorId) {
+        this.floorId = floorId;
+    }
+
+    public String getFloorName() {
+        return floorName;
+    }
+
+    public void setFloorName(String floorName) {
+        this.floorName = floorName;
+    }
+
+    public Integer getFloorNumber() {
+        return floorNumber;
+    }
+
+    public void setFloorNumber(Integer floorNumber) {
+        this.floorNumber = floorNumber;
+    }
+}

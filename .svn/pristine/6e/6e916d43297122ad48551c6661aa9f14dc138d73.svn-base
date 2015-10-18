@@ -1,0 +1,61 @@
+package ee.lps;
+
+import ee.lps.model.Beacon;
+import ee.lps.model.Building;
+import ee.lps.model.Floor;
+import ee.lps.model.Room;
+import ee.lps.repository.BeaconRepository;
+import ee.lps.repository.BuildingRepository;
+import ee.lps.repository.FloorRepository;
+import ee.lps.repository.RoomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class SampleController {
+    @Autowired
+    private BeaconRepository beaconRepository;
+
+    @Autowired
+    private FloorRepository floorRepository;
+
+    @Autowired
+    private BuildingRepository buildingRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @RequestMapping(value="/", method = RequestMethod.GET)
+    public ModelAndView sample() {
+        return new ModelAndView("index");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/beacon", method = RequestMethod.GET, produces = "application/json")
+    public String sampleBeacon() {
+        Beacon beacon = beaconRepository.findOne(1l);
+        return beacon.getBeaconId().toString();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/room", method = RequestMethod.GET, produces = "application/json")
+    public Room sampleRoom() {
+        return roomRepository.findOne(1l);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/building", method = RequestMethod.GET, produces = "application/json")
+    public Building sampleBuilding() {
+        return buildingRepository.findOne(1l);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/floor", method = RequestMethod.GET, produces = "application/json")
+    public Floor sampleFloor() {
+        return floorRepository.findOne(1l);
+    }
+}

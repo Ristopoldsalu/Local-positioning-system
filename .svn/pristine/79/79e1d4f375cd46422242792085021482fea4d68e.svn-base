@@ -1,0 +1,30 @@
+// TODO: Needs finishing. Take room id from url arguments, mac from the pass method.
+
+function passMacRssiFromAndroid(mac, rssi) {
+    checkIfBeaconIsInRoom(mac, 1);
+}
+
+function checkIfBeaconIsInRoom(mac, roomId) {
+    $.ajax({
+        url: getContextPath() + "/receiveBluetoothData?mac=" + mac + "&roomId=" + roomId,
+        type: "post",
+        dataType: 'json',
+        async: "false",
+        success: function(data) {
+            $("#testdiv").html("<h2>SUCCESS</h2>" + data);
+        },
+        error: function (e) {
+             $("#testdiv").html("<h2>ERROR</h2>");
+        }
+    });
+}
+
+/**
+function bluetoothSendDataCycle(mac, RSSI) {
+    var foundDestination = false;
+    while (!foundDestination) {
+        setInterval(function() {
+            foundDestination = sendBluetoothData(getContextPath(), mac, RSSI); }, 5000);
+    }
+}
+ **/

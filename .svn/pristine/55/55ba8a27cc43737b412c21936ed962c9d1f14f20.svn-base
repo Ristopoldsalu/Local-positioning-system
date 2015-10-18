@@ -1,0 +1,88 @@
+package ee.lps.model;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+
+@Entity
+@Table(name="Room")
+@NamedQuery(name = "Room.getRoomsByBuildingId", query = "select r from Room r where r.floor.building.buildingId = ?1")
+public class Room implements Serializable {
+    @Id
+    @GeneratedValue
+    @Column(name = "room_id")
+    private Long roomId;
+
+    @Column(name = "room_name")
+    private String roomName;
+
+    @Column(name = "room_number")
+    private String roomNumber;
+
+    @Column(name = "room_polygon")
+    private String roomPolygon;
+
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    private List<Beacon> beacons;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "floor_id")
+    private Floor floor;
+
+    public Room(Long roomId, String roomName, String roomNumber, String roomPolygon) {
+        this.roomId = roomId;
+        this.roomName = roomName;
+        this.roomNumber = roomNumber;
+        this.roomPolygon = roomPolygon;
+    }
+
+    public Room() {}
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public String getRoomPolygon() {
+        return roomPolygon;
+    }
+
+    public void setRoomPolygon(String roomPolygon) {
+        this.roomPolygon = roomPolygon;
+    }
+
+    public List<Beacon> getBeacons() {
+        return beacons;
+    }
+
+    public void setBeacons(List<Beacon> beacons) {
+        this.beacons = beacons;
+    }
+
+    public Floor getFloor() {
+        return floor;
+    }
+
+    public void setFloor(Floor floor) {
+        this.floor = floor;
+    }
+}

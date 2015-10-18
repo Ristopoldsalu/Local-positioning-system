@@ -1,0 +1,37 @@
+package ee.lps.util;
+
+import ee.lps.model.PathPoint;
+import org.junit.Assert;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class CalculateCornerTest {
+
+    @Test
+    public void testCalculateCornerFromThreePoints() throws Exception {
+        PathPoint center = getPathPoint("(0,0)");
+        PathPoint point1 = getPathPoint("(4,-4)");
+        PathPoint point2 = getPathPoint("(4,0)");
+        double answer = CalculateCorner.calculateCornerFromThreePoints(center, point1, point2);
+        System.out.println(answer);
+        assertEquals(45, answer, 0.1);
+    }
+
+    @Test
+    public void hh() throws Exception {
+        PathPoint point1 = getPathPoint("(0,-3)");
+        PathPoint point2 = getPathPoint("(-1,3)");
+        PathPoint center = getPathPoint("(0,0)");
+        double answer = CalculateCorner.calculateCornerFromThreePoints(center, point1, point2);
+        System.out.println(answer);
+        System.out.println(Math.toDegrees(answer));
+        assertEquals(180, answer, 0.1);
+    }
+
+    private PathPoint getPathPoint(String location) {
+        PathPoint point1 = new PathPoint();
+        point1.setLocation(location);
+        return point1;
+    }
+}

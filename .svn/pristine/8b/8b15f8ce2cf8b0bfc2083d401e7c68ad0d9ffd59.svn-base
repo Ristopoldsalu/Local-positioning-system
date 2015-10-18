@@ -1,0 +1,22 @@
+package ee.lps.dto;
+
+public class GuidelineDTO {
+    private String guideline;
+    private float directionRad;
+
+    public String getGuideline() {
+        return guideline;
+    }
+
+    public void setGuideline(String guideline) {
+        this.guideline = guideline;
+    }
+
+    public float getDirectionRad() {
+        return directionRad;
+    }
+
+    public void setDirectionRad(float directionRad) {
+        this.directionRad = directionRad;
+    }
+}

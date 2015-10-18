@@ -1,0 +1,22 @@
+function sendBluetoothData(contextPath, mac, RSSI) {
+    $.ajax({
+        url: contextPath + "/receiveBluetoothData?mac=" + mac + "&RSSI=" + RSSI,
+        type: "post",
+        dataType: 'json',
+        async: "false",
+        success: function(data) {
+            return true;
+        },
+        error: function (e) {
+            return false;
+        }
+    });
+}
+
+function bluetoothSendDataCycle(contextPath, mac, RSSI) {
+    var foundDestination = false;
+    while (!foundDestination) {
+        setInterval(function() {
+            foundDestination = sendBluetoothData(contextPath, mac, RSSI); }, 5000);
+    }
+}

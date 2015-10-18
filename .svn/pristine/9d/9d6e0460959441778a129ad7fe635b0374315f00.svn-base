@@ -1,0 +1,77 @@
+package ee.lps.controller;
+
+import ee.lps.dto.BuildingDto;
+import ee.lps.dto.RoomDto;
+import ee.lps.service.BuildingService;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
+import static java.util.Arrays.asList;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNull;
+import static org.mockito.Mockito.when;
+
+public class BeaconControllerTest {
+    @InjectMocks
+    private BeaconController controller;
+
+    @Mock
+    private BuildingService buildingServiceMock;
+
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+        when(buildingServiceMock.getBuildingByMac("17:17:17:AA:AA:AA")).thenReturn(new BuildingDto(1l, "Big building"));
+        List<RoomDto> sampleList = asList(new RoomDto(5l, "1337A", "Secretary room"),
+                new RoomDto(4l, "137A", "Boss room"));
+        when(buildingServiceMock.getRoomsByBuildingId(2l)).thenReturn(sampleList);
+    }
+
+    @Test
+    public void getBeaconByMacThatIsNull() {
+        ModelAndView response = controller.getBeaconByMac(null);
+        assertNull(response.getModelMap().get("building"));
+    }
+
+    @Test
+    public void getBeaconByMacThatExists() {
+        ModelAndView response = controller.getBeaconByMac("17:17:17:AA:AA:AA");
+        BuildingDto building = (BuildingDto) response.getModelMap().get("building");
+        assertEquals("Big building", building.getBuildingName());
+        assertEquals(1l, building.getBuildingId().longValue());
+    }
+
+    @Test
+    public void getBeaconByMacThatNotExists() {
+        ModelAndView response = controller.getBeaconByMac("17:17:17:BB:BB:BB");
+        assertEquals(null, response.getModelMap().get("building"));
+
+        response = controller.getBeaconByMac("asdf");
+        assertEquals(null, response.getModelMap().get("building"));
+    }
+
+    @Test
+    public void getRoomsWithBuildingIdNull() {
+        List<RoomDto> roomDtos = controller.getRooms(null);
+        assertEquals(0, roomDtos.size());
+    }
+
+    @Test
+    public void getRoomsWithBuildingIdNotExists() {
+        List<RoomDto> roomDtos = controller.getRooms(4l);
+        assertEquals(0, roomDtos.size());
+    }
+
+    @Test
+    public void getRoomsWithExistingBuildingId() {
+        List<RoomDto> roomDtos = controller.getRooms(2l);
+        assertEquals(2, roomDtos.size());
+
+    }
+}

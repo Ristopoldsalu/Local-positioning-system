@@ -1,0 +1,53 @@
+package ee.lps.controller;
+
+import ee.lps.dto.RoomSectorDto;
+import ee.lps.service.RoomService;
+import ee.lps.service.SectorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
+import static ee.lps.util.Wrapper.WrappedObj;
+import static ee.lps.util.Wrapper.wrap;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+/**
+ * Controller that serves navigation.jsp and offers ajax services to it.
+ */
+@Controller
+public class NavigationController {
+    @Autowired
+    private RoomService roomService;
+
+    @Autowired
+    SectorService sectorService;
+
+    @RequestMapping(value = "/navigation", method = GET)
+    public ModelAndView navigate(@RequestParam(required = false) Long roomId) {
+        ModelAndView view = new ModelAndView("navigation");
+        view.addObject("room", roomService.findRoomById(roomId));
+        return view;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/room/sector/calculate", method = POST, produces = APPLICATION_JSON_VALUE,
+            consumes = APPLICATION_JSON_VALUE)
+    public WrappedObj<RoomSectorDto> calculateSector(@RequestBody List<BeaconMeasurement> beaconMeasurements) {
+        return wrap(sectorService.findSectorBasedOnMeasurements(beaconMeasurements));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/receiveBluetoothData", method = POST, produces = APPLICATION_JSON_VALUE)
+    public WrappedObj<Boolean> isDestinationReached(@RequestParam("mac") String mac,
+            @RequestParam("rssi") Short rssi, @RequestParam("roomId") Long roomId) {
+        return wrap(roomService.checkIfCorrectDestination(mac, rssi, roomId));
+    }
+}

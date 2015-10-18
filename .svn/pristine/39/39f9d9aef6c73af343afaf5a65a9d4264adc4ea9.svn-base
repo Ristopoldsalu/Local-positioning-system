@@ -1,0 +1,37 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<html>
+<jsp:include page="header.jsp"/>
+<body>
+    <div class="container-fluid">
+        <c:choose>
+            <c:when test="${not empty building}">
+                <h2 class="text-left">Sa asud:</h2><p>
+                <h1 class="text-center"><c:out value="${building.buildingName}"/></h1><p>
+                <div class="col-xs-12" style="height:50px;"></div>
+                <form role="form" method="GET" action="${pageContext.request.contextPath}/navigation">
+                    <div class="form-group">
+                        <label for="roomSelection">Palun vali sihtkoht:</label><p>
+                        <label>
+                            <select class="form-control selectpicker-large" name="roomId" id="roomSelection">
+                            </select>
+                        </label>
+                        <div class="col-xs-12" style="height:50px;"></div>
+                        <input type="submit" class="form-select-button btn btn-success btn-lg btn-block align-center"  value="GO!">
+                    </div>
+                </form>
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        queryRoomsList(${building.buildingId});
+                    });
+                </script>
+            </c:when>
+            <c:otherwise>
+                <% response.setStatus(404); %>
+                Didn't find any building.
+            </c:otherwise>
+        </c:choose>
+    </div>
+</body>
+</html>

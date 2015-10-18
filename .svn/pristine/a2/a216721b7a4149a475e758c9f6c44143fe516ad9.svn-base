@@ -1,0 +1,33 @@
+package ee.lps.util.data.model;
+
+import java.util.Arrays;
+
+public class Polygon {
+    private Point[] point;
+
+    public Polygon(Point[] point) {
+        point = new Point[4];
+        this.point = point;
+    }
+
+    public Polygon() {
+        point = new Point[4];
+    }
+
+    public Point[] getPoint() {
+        return point;
+    }
+
+    public void setPoint(Point[] point) {
+        this.point = point;
+    }
+
+    @Override
+    public String toString() {
+        return "Polygon{" +
+                "point=" + Arrays.toString(point) +
+                '}';
+    }
+
+
+}

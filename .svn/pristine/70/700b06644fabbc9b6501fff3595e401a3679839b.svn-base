@@ -1,0 +1,46 @@
+package ee.lps.service;
+
+import ee.lps.dto.BeaconMeasurementDto;
+import ee.lps.dto.UserPositionDto;
+import ee.lps.repository.BeaconRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.Comparator;
+
+import static java.util.stream.Collectors.*;
+
+@Service
+public class NavigationServiceImpl implements NavigationService {
+    public static final int MIN_RSSI = -70;
+
+    @Autowired
+    private BeaconRepository beaconRepository;
+
+    @Override
+    public UserPositionDto findUserPosition(Collection<BeaconMeasurementDto> measurements) {
+        measurements = removeNonExistingBeacons(measurements);
+        BeaconMeasurementDto bestMeasurement = chooseBestMeasurement(measurements);
+        if (bestMeasurement == null) return null;
+        return new UserPositionDto(beaconRepository.findByMac(bestMeasurement.getMac()));
+    }
+
+    private Collection<BeaconMeasurementDto> removeNonExistingBeacons(Collection<BeaconMeasurementDto> measurements) {
+        return measurements.stream().filter(this::isValidMac).collect(toList());
+    }
+
+    private boolean isValidMac(BeaconMeasurementDto measurement) {
+        return beaconRepository.findByMac(measurement.getMac()) != null;
+    }
+
+    private BeaconMeasurementDto chooseBestMeasurement(Collection<BeaconMeasurementDto> measurements) {
+        if (measurements.size() == 0) return null;
+        BeaconMeasurementDto bestMeasurement = getBestRssiMeasurement(measurements);
+        return bestMeasurement.getRssi() >= MIN_RSSI ? bestMeasurement : null;
+    }
+
+    private BeaconMeasurementDto getBestRssiMeasurement(Collection<BeaconMeasurementDto> measurements) {
+        return measurements.stream().max(Comparator.comparingInt(BeaconMeasurementDto::getRssi)).get();
+    }
+}

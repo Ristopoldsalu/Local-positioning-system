@@ -1,0 +1,13 @@
+package ee.lps.service;
+
+import ee.lps.controller.BeaconMeasurement;
+import ee.lps.dto.RoomSectorDto;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.List;
+
+@Transactional
+public interface SectorService {
+    RoomSectorDto findSectorBasedOnMeasurements(List<BeaconMeasurement> beaconMeasurements);
+}

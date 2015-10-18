@@ -1,0 +1,100 @@
+package ee.lps.service;
+
+import ee.lps.dto.BeaconMeasurementDTO;
+import ee.lps.dto.GuidelineDTO;
+import ee.lps.dto.UserPositionDTO;
+import ee.lps.model.Beacon;
+import ee.lps.model.PathPoint;
+import ee.lps.repository.BeaconRepository;
+import ee.lps.repository.PathPointRepository;
+import ee.lps.repository.PathRepository;
+import ee.lps.repository.RoomRepository;
+import ee.lps.util.CalculateCorner;
+import ee.lps.util.ShortestPath;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
+
+@Service
+public class NavigationServiceImpl implements NavigationService {
+    public static final int MIN_RSSI = -75;
+
+    @Autowired
+    private BeaconRepository beaconRepository;
+
+    @Autowired
+    private PathPointRepository pathPointRepository;
+
+    @Autowired
+    private PathRepository pathRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @Override
+    public UserPositionDTO findUserPosition(Collection<BeaconMeasurementDTO> measurements) {
+        BeaconMeasurementDTO bestMeasurement = chooseBestMeasurement(removeNonExistingBeacons(measurements));
+        if (bestMeasurement == null) return null;
+        return new UserPositionDTO(beaconRepository.findByMac(bestMeasurement.getMac()));
+    }
+
+    @Override
+    public GuidelineDTO getGuidelines(Long fromPathPointId, Long toRoomId) {
+        PathPoint startPathPoint = pathPointRepository.findOne(fromPathPointId);
+        List<PathPoint> possibleDestinations = getRoomCorridorPathPoints(toRoomId);
+
+        if (startPathPoint == null || possibleDestinations.size() == 0) return null;
+
+        ShortestPath shortestPath = new ShortestPath(pathRepository.findAll());
+        shortestPath.execute(startPathPoint);
+        LinkedList<PathPoint> path = shortestPath.getPath(possibleDestinations.get(0));
+        if (path == null) return null;
+        GuidelineDTO guidelineDTO = new GuidelineDTO();
+        double corner = 3;
+        if (path.size() >= 3)
+            corner = CalculateCorner.calculateCornerFromThreePoints(path.get(0), path.get(1), path.get(2));
+        if (Math.abs(corner) > 20)
+            if (corner > 0) {
+                guidelineDTO.setGuideline("mine vasakule");
+                guidelineDTO.setDirectionRad((float) corner);
+            }
+            else {
+                guidelineDTO.setGuideline("mine paremale");
+                guidelineDTO.setDirectionRad((float) corner);
+            }
+        else {
+            guidelineDTO.setGuideline("mine otse");
+            guidelineDTO.setDirectionRad((float) corner);
+        }
+        return guidelineDTO;
+    }
+
+    // TODO: Maybe it is smarter to use a named query.
+    private List<PathPoint> getRoomCorridorPathPoints(Long toRoomId) {
+        return roomRepository.findOne(toRoomId).getBeacons().stream().map(Beacon::getCorridorPathPoint).collect(toList());
+    }
+
+    private Collection<BeaconMeasurementDTO> removeNonExistingBeacons(Collection<BeaconMeasurementDTO> measurements) {
+        return measurements.stream().filter(this::isValidMac).collect(toList());
+    }
+
+    private boolean isValidMac(BeaconMeasurementDTO measurement) {
+        return beaconRepository.findByMac(measurement.getMac()) != null;
+    }
+
+    private BeaconMeasurementDTO chooseBestMeasurement(Collection<BeaconMeasurementDTO> measurements) {
+        if (measurements.size() == 0) return null;
+        BeaconMeasurementDTO bestMeasurement = getBestRssiMeasurement(measurements);
+        return bestMeasurement.getRssi() >= MIN_RSSI ? bestMeasurement : null;
+    }
+
+    private BeaconMeasurementDTO getBestRssiMeasurement(Collection<BeaconMeasurementDTO> measurements) {
+        return measurements.stream().max(Comparator.comparingInt(BeaconMeasurementDTO::getRssi)).get();
+    }
+}

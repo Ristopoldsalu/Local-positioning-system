@@ -1,0 +1,62 @@
+package ee.lps.controller;
+
+import ee.lps.dto.BeaconMeasurementDTO;
+import ee.lps.dto.PathPointDTO;
+import ee.lps.dto.RoomDTO;
+import ee.lps.dto.UserPositionDTO;
+import ee.lps.repository.RoomRepository;
+import ee.lps.service.RoomService;
+import ee.lps.service.NavigationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
+import static ee.lps.util.Wrapper.WrappedObj;
+import static ee.lps.util.Wrapper.wrap;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+/**
+ * Controller that serves navigation.jsp and offers ajax services to it.
+ */
+@Controller
+public class NavigationController {
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @Autowired
+    NavigationService navigationService;
+
+    @Autowired
+    private RoomService roomService;
+
+    @RequestMapping(value = "/navigation", method = GET)
+    public ModelAndView navigate(@RequestParam(required = false) Long roomId) {
+        ModelAndView view = new ModelAndView("navigation");
+        view.addObject("room", roomRepository.findOne(roomId));
+        return view;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/rooms", method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
+    public List<RoomDTO> getRooms(@RequestParam(required = false) Long buildingId) {
+        return roomService.getRoomsByBuildingId(buildingId);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/room/find", method = POST, produces = APPLICATION_JSON_VALUE,
+            consumes = APPLICATION_JSON_VALUE)
+    public WrappedObj<UserPositionDTO> findPositionNearRoom(@RequestBody List<BeaconMeasurementDTO> measurements) {
+        return wrap(navigationService.findUserPosition(measurements));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/guideline", method = GET, produces = APPLICATION_JSON_VALUE)
+    public WrappedObj<List> getGuideline(Long fromPathPointId, Long toRoomId, Boolean disabilityToWalk) {
+        return wrap(navigationService.getGuidelines(fromPathPointId, toRoomId, disabilityToWalk));
+    }
+}

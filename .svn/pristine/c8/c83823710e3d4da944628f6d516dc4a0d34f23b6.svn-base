@@ -1,0 +1,17 @@
+package ee.lps.service;
+
+import ee.lps.dto.RoomDto;
+
+import javax.transaction.Transactional;
+import java.util.List;
+
+public interface RoomService {
+    @Transactional
+    RoomDto findRoomById(Long roomId);
+
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    List<RoomDto> getRoomsByBuildingId(Long buildingId);
+
+    @Transactional
+    boolean checkIfCorrectDestination(String mac, Short rssi, Long roomId);
+}

@@ -1,0 +1,10 @@
+
+function populateRoomList(rooms) {
+    $.each(rooms, function (i, room) {
+        $('#roomSelection').append($('<option>', {
+            value: room.roomId,
+            text : room.roomName + ' ' + room.roomNumber
+        }));
+    });
+
+}

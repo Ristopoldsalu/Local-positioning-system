@@ -1,0 +1,53 @@
+package ee.lps.controller;
+
+import ee.lps.dto.RoomDto;
+import ee.lps.service.BuildingService;
+import ee.lps.service.RoomService;
+import ee.lps.util.PrimitiveWrapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
+@Controller
+public class BeaconController {
+    @Autowired
+    private BuildingService buildingService;
+
+    @Autowired
+    private RoomService roomService;
+
+    @RequestMapping(value = "/beacon", method = RequestMethod.GET)
+    public ModelAndView getBeaconByMac(@RequestParam(required = false) String mac) {
+        ModelAndView view = new ModelAndView("index");
+        view.addObject("building", buildingService.getBuildingByMac(mac));
+        return view;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/rooms", method = RequestMethod.GET, produces = "application/json")
+    public List<RoomDto> getRooms(@RequestParam(required = false) Long buildingId) {
+        return roomService.getRoomsByBuildingId(buildingId);
+    }
+
+    @RequestMapping(value = "/navigation", method = RequestMethod.GET)
+    public ModelAndView navigates(@RequestParam(required = false) Long roomId) {
+        ModelAndView view = new ModelAndView("navigation");
+        view.addObject("room", roomService.findRoomById(roomId));
+        return view;
+    }
+
+    @RequestMapping(value = "/loader", method = RequestMethod.GET)
+    public ModelAndView loader() {
+        return new ModelAndView("loader");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/receiveBluetoothData", method = RequestMethod.POST, produces = "application/json")
+    public PrimitiveWrapper.WrappedBoolean checkIfReachedDestination(@RequestParam("mac") String mac,
+           @RequestParam("rssi") Integer rssi, @RequestParam("roomId") Long roomId) {
+        return PrimitiveWrapper.wrap(roomService.checkIfCorrectDestination(mac, rssi, roomId));
+    }
+}

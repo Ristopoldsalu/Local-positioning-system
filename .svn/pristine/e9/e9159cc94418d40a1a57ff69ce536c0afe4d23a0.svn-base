@@ -1,0 +1,15 @@
+package ee.lps.util;
+
+public class BluetoothDistance {
+    private final Short TX_POWER = 4;
+
+    /**
+     * Returns distance from bluetooth device
+     * to signal receiver in meters
+     * @param rssi
+     * @return
+     */
+    public Double getDistance(Short rssi) {
+        return Math.pow(10D, ((double)(TX_POWER - rssi)) / 20);
+    }
+}

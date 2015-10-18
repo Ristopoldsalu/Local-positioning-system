@@ -1,0 +1,24 @@
+package ee.lps.service;
+
+import ee.lps.dto.BeaconMeasurementDto;
+import junit.framework.TestCase;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+public class SectorServiceImplTest extends TestCase {
+    SectorServiceImpl sectorServiceImpl = new SectorServiceImpl();
+
+    public void testRemoveDuplicateMacs() throws Exception {
+        Collection<BeaconMeasurementDto> result = sectorServiceImpl.removeDuplicateMacs(Arrays.asList(
+                new BeaconMeasurementDto("1", 1),
+                new BeaconMeasurementDto("1", 2),
+                new BeaconMeasurementDto("2", 3),
+                new BeaconMeasurementDto("0", 3),
+                new BeaconMeasurementDto("2", 3),
+                new BeaconMeasurementDto("1", 3),
+                null
+        ));
+        assertEquals(result.size(), 3);
+    }
+}

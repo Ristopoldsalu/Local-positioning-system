@@ -1,0 +1,93 @@
+package ee.lps.model;
+
+import org.springframework.data.geo.Point;
+import org.springframework.data.geo.format.PointFormatter;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
+
+@Entity
+@Table(name = "PathPoint")
+public class PathPoint {
+    @Id
+    @GeneratedValue
+    @Column(name = "pathpoint_id")
+    private Long pathPointId;
+
+    @Column(name = "pathpoint_location")
+    private String location;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "endPathPoint")
+    private List<Path> pathsEndingHere;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "startPathPoint")
+    private List<Path> pathsStartingFromHere;
+
+    public Long getPathPointId() {
+        return pathPointId;
+    }
+
+    public void setPathPointId(Long pathPointId) {
+        this.pathPointId = pathPointId;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public List<Path> getPathsEndingHere() {
+        return pathsEndingHere;
+    }
+
+    public List<Path> getPathsStartingFromHere() {
+        return pathsStartingFromHere;
+    }
+
+    public String getLocationWithoutBrackets() {
+        return getLocation().replace("(", "").replace(")", "");
+    }
+
+    public void setPathsEndingHere(List<Path> pathsEndingHere) {
+        this.pathsEndingHere = pathsEndingHere;
+    }
+
+    public void setPathsStartingFromHere(List<Path> pathsStartingFromHere) {
+        this.pathsStartingFromHere = pathsStartingFromHere;
+    }
+
+    public List<PathPoint> getAllNeighbors() {
+        List<PathPoint> neighbors = new ArrayList<>();
+        neighbors.addAll(findNeighbors(pathsEndingHere));
+        neighbors.addAll(findNeighbors(pathsStartingFromHere));
+        return neighbors;
+    }
+
+    private List<PathPoint> findNeighbors(List<Path> paths) {
+        List<PathPoint> neighbors = new ArrayList<>();
+        for (Path path : paths) {
+            if (path.getEndPathPoint().equals(this)) neighbors.add(path.getStartPathPoint());
+            if (path.getStartPathPoint().equals(this)) neighbors.add(path.getEndPathPoint());
+        }
+        return neighbors;
+    }
+
+    public Point getLocationAsPoint() {
+        return PointFormatter.INSTANCE.convert(getLocationWithoutBrackets());
+    }
+
+    public double costToPoint(PathPoint point) {
+        PointFormatter formatter = PointFormatter.INSTANCE;
+        Point startPoint = getLocationAsPoint();
+        Point endPoint = formatter.convert(point.getLocationWithoutBrackets());
+        return sqrt(pow(endPoint.getX() - startPoint.getX(), 2) +
+                pow(endPoint.getY() - startPoint.getY(), 2));
+    }
+}

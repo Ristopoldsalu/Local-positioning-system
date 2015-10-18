@@ -1,0 +1,14 @@
+package ee.lps.service;
+
+import ee.lps.dto.BeaconMeasurementDTO;
+import ee.lps.dto.GuidelineDTO;
+import ee.lps.dto.UserPositionDTO;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+
+@Transactional(readOnly = true)
+public interface NavigationService {
+    UserPositionDTO findUserPosition(Collection<BeaconMeasurementDTO> measurements);
+    GuidelineDTO getGuidelines(Long fromSectorId, Long toRoomId);
+}

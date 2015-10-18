@@ -1,0 +1,46 @@
+package ee.lps.service;
+
+import ee.lps.dto.RoomDto;
+import ee.lps.model.Beacon;
+import ee.lps.model.Room;
+import ee.lps.repository.BeaconRepository;
+import ee.lps.repository.RoomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+@Service
+public class RoomServiceImpl implements RoomService {
+    @Autowired
+    private RoomRepository roomRepository;
+    @Autowired
+    private BeaconRepository beaconRepository;
+
+    @Override
+    public RoomDto findRoomById(Long roomId) {
+        Room room = roomRepository.findOne(roomId);
+        if (room == null) return null;
+        return new RoomDto(room.getRoomId(), room.getRoomNumber(), room.getRoomName());
+    }
+
+    @Override
+    public List<RoomDto> getRoomsByBuildingId(Long buildingId) {
+        List<Room> rooms = roomRepository.getRoomsByBuildingId(buildingId);
+        List<RoomDto> roomDtos = new ArrayList<>(rooms.size());
+        rooms.forEach(room -> roomDtos.add(mapFromRoom(room)));
+        return roomDtos;
+    }
+
+    @Override
+    public Boolean checkIfCorrectDestination(String mac, int rssi, Long roomId) {
+        Beacon beacon = beaconRepository.findByMac(mac);
+        return beacon != null && Objects.equals(beacon.getRoom().getRoomId(), roomId) && rssi > -85;
+    }
+
+    private RoomDto mapFromRoom(Room room) {
+        return new RoomDto(room.getRoomId(), room.getRoomNumber(), room.getRoomName());
+    }
+}

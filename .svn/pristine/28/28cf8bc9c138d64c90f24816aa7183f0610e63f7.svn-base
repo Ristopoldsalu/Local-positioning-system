@@ -1,0 +1,44 @@
+package ee.lps.service;
+
+import ee.lps.dto.BuildingDto;
+import ee.lps.dto.RoomDto;
+import ee.lps.model.Beacon;
+import ee.lps.model.Building;
+import ee.lps.model.Room;
+import ee.lps.repository.BeaconRepository;
+import ee.lps.repository.RoomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class BuildingServiceImpl implements BuildingService {
+    @Autowired
+    private BeaconRepository beaconRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @Override
+    public List<RoomDto> getRoomsByBuildingId(Long buildingId) {
+        List<Room> rooms = roomRepository.getRoomsByBuildingId(buildingId);
+        List<RoomDto> roomDtos = new ArrayList<>(rooms.size());
+        rooms.forEach(room -> roomDtos.add(mapFromRoom(room)));
+        return roomDtos;
+    }
+
+    private RoomDto mapFromRoom(Room room) {
+        return new RoomDto(room.getRoomId(), room.getRoomNumber(), room.getRoomName());
+    }
+
+
+    @Override
+    public BuildingDto getBuildingByMac(String macaddr) {
+        Beacon beacon = beaconRepository.findByMac(macaddr);
+        if (beacon == null) return null;
+        Building building = beacon.getRoom().getFloor().getBuilding();
+        return new BuildingDto(building.getBuildingId(), building.getBuildingName());
+    }
+}

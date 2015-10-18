@@ -1,0 +1,44 @@
+package ee.lps.model;
+
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "sectorcenter")
+public class SectorCentroid implements Serializable {
+    @Id
+    @GeneratedValue
+    @Column(name = "sector_id")
+    private Long sectorId;
+
+    @Column(name = "sector_center")
+    private String sectorCenter;
+
+    public SectorCentroid() {
+
+    }
+
+    public Long getSectorId() {
+        return sectorId;
+    }
+
+    public void setSectorId(Long sectorId) {
+        this.sectorId = sectorId;
+    }
+
+    public String getSectorCenter() {
+        return sectorCenter;
+    }
+
+    public void setSectorCenter(String sectorCenter) {
+        this.sectorCenter = sectorCenter;
+    }
+
+    @Override
+    public String toString() {
+        return "SectorCentroid{" +
+                "sectorId=" + sectorId +
+                ", sectorCenter='" + sectorCenter + '\'' +
+                '}';
+    }
+}

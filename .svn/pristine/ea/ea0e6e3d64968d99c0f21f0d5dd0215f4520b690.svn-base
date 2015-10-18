@@ -1,0 +1,84 @@
+package ee.lps.controller;
+
+import ee.lps.dto.RoomDto;
+import ee.lps.service.RoomService;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.web.servlet.ModelAndView;
+
+import static ee.lps.util.Wrapper.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertTrue;
+import static org.mockito.Mockito.when;
+
+public class NavigationControllerTest {
+    @InjectMocks
+    private NavigationController navController;
+
+    @Mock
+    private RoomService roomServiceMock;
+
+    @Before
+    public void setupForTesting() {
+        MockitoAnnotations.initMocks(this);
+        when(roomServiceMock.findRoomById(4L)).thenReturn(new RoomDto(4L, "100A", "Boss room"));
+        when(roomServiceMock.checkIfCorrectDestination("17:17:17:17:17:17", (short) -80, 3L)).thenReturn(true);
+    }
+
+    @Test
+    public void shouldNotPutRoomToModelIfRoomIdIsNull() {
+        ModelAndView view = navController.navigate(null);
+        assertNull(view.getModel().get("room"));
+    }
+
+    @Test
+    public void shouldNotPutRoomToModelIfRoomIdNotExists() {
+        ModelAndView view = navController.navigate(-1L);
+        assertNull(view.getModel().get("room"));
+
+        view = navController.navigate(40L);
+        assertNull(view.getModel().get("room"));
+    }
+
+    @Test
+    public void shouldPutRoomToModelIfRoomExists() {
+        ModelAndView view = navController.navigate(4L);
+        RoomDto room = (RoomDto) view.getModel().get("room");
+        assertEquals("Boss room", room.getRoomName());
+    }
+
+    @Test
+    public void isDestinationReachedWhenBeaconNotExists() {
+        WrappedObj<Boolean> result = navController.isDestinationReached(null, (short) -100, 3L);
+        assertFalse(result.getValue());
+
+        result = navController.isDestinationReached("10:10:10:15:15:15", (short) -60, 3L);
+        assertFalse(result.getValue());
+    }
+
+    @Test
+    public void isDestinationReachedWhenRoomNotExists() {
+        WrappedObj<Boolean> result = navController.isDestinationReached("17:17:17:17:17:17", (short) -90, -1L);
+        assertFalse(result.getValue());
+
+        result = navController.isDestinationReached("17:17:17:17:17:17", (short) -90, 2L);
+        assertFalse(result.getValue());
+    }
+
+    @Test
+    public void isDestinationReachedWhenDataIsGood() {
+        WrappedObj<Boolean> result = navController.isDestinationReached("17:17:17:17:17:17", (short) -80, 3L);
+        assertTrue(result.getValue());
+    }
+
+    @Test
+    public void isDestinationReachedWhenAllArgsNull() {
+        WrappedObj<Boolean> result = navController.isDestinationReached(null, null, null);
+        assertFalse(result.getValue());
+    }
+}

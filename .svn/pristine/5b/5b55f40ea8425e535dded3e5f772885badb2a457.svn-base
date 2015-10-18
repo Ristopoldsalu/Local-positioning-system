@@ -1,0 +1,73 @@
+package ee.lps.service;
+
+import ee.lps.controller.BeaconMeasurement;
+import ee.lps.dto.RoomSectorDto;
+import ee.lps.model.Beacon;
+import ee.lps.repository.BeaconRepository;
+import ee.lps.repository.SectorRepository;
+import ee.lps.util.BluetoothUtil;
+import ee.lps.util.NonLinearLeastSquaresSolver;
+import ee.lps.util.Trilateration;
+import ee.lps.util.data.model.Point;
+import org.apache.commons.math3.fitting.leastsquares.LeastSquaresOptimizer;
+import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class SectorServiceImpl implements SectorService {
+    public static final int MIN_BEACONS_FOR_POS_CALC = 3;
+    @Autowired
+    private SectorRepository sectorRepository;
+
+    @Autowired
+    private BeaconRepository beaconRepository;
+
+    @Override
+    public RoomSectorDto findSectorBasedOnMeasurements(List<BeaconMeasurement> measurements) {
+        List<BeaconDistAndPos> beaconDistAndPosList = calculateBeaconDistancesAndPositions(measurements);
+        if (beaconDistAndPosList.size() < MIN_BEACONS_FOR_POS_CALC) return null;
+
+        Point point = solveTrilateration(beaconDistAndPosList);
+        return null;
+    }
+
+    private Point solveTrilateration(List<BeaconDistAndPos> beaconDistAndPosList) {
+        double[] distances = new double[beaconDistAndPosList.size()];
+        double[][] positions = new double[beaconDistAndPosList.size()][];
+
+        for (int index = 0; index < beaconDistAndPosList.size(); index++) {
+            BeaconDistAndPos distAndPos = beaconDistAndPosList.get(index);
+            distances[index] = distAndPos.distance;
+            positions[index] = new double[] {distAndPos.pos.getX(), distAndPos.pos.getY(), 1.0};
+        }
+
+        Trilateration trilat = new Trilateration(positions, distances);
+        NonLinearLeastSquaresSolver solver = new NonLinearLeastSquaresSolver(trilat, new LevenbergMarquardtOptimizer());
+        LeastSquaresOptimizer.Optimum optimum = solver.solve();
+        double[] pos = optimum.getPoint().toArray();
+        return new Point(pos[0], pos[1]);
+    }
+
+    private List<BeaconDistAndPos> calculateBeaconDistancesAndPositions(List<BeaconMeasurement> measurements) {
+        List<BeaconDistAndPos> distAndPosList = new ArrayList<>(measurements.size());
+        for (BeaconMeasurement measurement : measurements) {
+            Beacon beacon = beaconRepository.findByMac(measurement.getMac());
+            if (beacon != null) {
+                BeaconDistAndPos distAndPos = new BeaconDistAndPos();
+                distAndPos.distance = BluetoothUtil.calculateDistance(measurement.getRssi(), beacon.getBeaconTx());
+                distAndPos.pos = beacon.getBeaconLocationAsPoint();
+                distAndPosList.add(distAndPos);
+            }
+        }
+        return distAndPosList;
+    }
+
+    private static class BeaconDistAndPos {
+        private double distance;
+        private Point pos;
+    }
+}

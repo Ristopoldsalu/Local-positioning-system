@@ -1,0 +1,102 @@
+package ee.lps.service;
+
+import ee.lps.dto.BeaconMeasurementDto;
+import ee.lps.model.Beacon;
+import ee.lps.model.Room;
+import ee.lps.model.Sector;
+import ee.lps.repository.BeaconRepository;
+import ee.lps.repository.SectorRepository;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import static ee.lps.TestUtil.doubleThatIsInRange;
+import static junit.framework.TestCase.assertEquals;
+import static org.mockito.Mockito.when;
+
+public class SectorServiceTest {
+    public static final String TEST_MAC_1 = "10:10:10:10:10:10";
+    public static final String TEST_MAC_2 = "12:12:12:10:10:10";
+    public static final String TEST_MAC_3 = "15:10:12:13:15:10";
+    public static final long TEST_TX_POWER_1 = -60L;
+    public static final long TEST_TX_POWER_2 = -60L;
+    public static final long TEST_TX_POWER_3 = -50L;
+    public static final String TEST_POINT_1 = "(3.0,3.0)";
+    public static final String TEST_POINT_2 = "(8.0,8.0)";
+    public static final String TEST_POINT_3 = "(4,4)";
+    public static final long TEST_ROOM_ID = 1L;
+    public static final long TEST_SECTOR_ID = 1L;
+
+    @InjectMocks
+    private SectorServiceImpl sectorService;
+
+    @Mock
+    private SectorRepository sectorRepositoryMock;
+
+    @Mock
+    private BeaconRepository beaconRepositoryMock;
+
+    @Before
+    public void setupMocks() {
+        MockitoAnnotations.initMocks(this);
+        setupSectorRepositoryMocks();
+        setupBeaconRepositoryMocks();
+    }
+
+    private void setupBeaconRepositoryMocks() {
+        addTestBeaconToRepository(TEST_MAC_1, TEST_TX_POWER_1, TEST_POINT_1);
+        addTestBeaconToRepository(TEST_MAC_2, TEST_TX_POWER_2, TEST_POINT_2);
+        addTestBeaconToRepository(TEST_MAC_3, TEST_TX_POWER_3, TEST_POINT_3);
+    }
+
+    private void addTestBeaconToRepository(String mac, long txPower, String location) {
+        when(beaconRepositoryMock.findByMac(mac)).thenReturn(new Beacon(mac, txPower, location));
+    }
+
+    private void setupSectorRepositoryMocks() {
+        Room room = new Room();
+        room.setRoomId(TEST_ROOM_ID);
+        room.setRoomName("Cool room name");
+        room.setRoomNumber("Cool nr1 room");
+
+        Sector sector = new Sector();
+        sector.setSectorId(TEST_SECTOR_ID);
+        sector.setSectorName("ROOM 1N");
+        sector.setRoom(room);
+
+        when(sectorRepositoryMock.getSectorContainingPoint(doubleThatIsInRange(0, 10), doubleThatIsInRange(0, 10)))
+                .thenReturn(sector);
+    }
+
+    @Test
+    public void shouldRemoveDuplicateBeaconMeasurements() throws Exception {
+        Collection<BeaconMeasurementDto> result = sectorService.removeDuplicateMacs(Arrays.asList(
+                new BeaconMeasurementDto("1", 1),
+                new BeaconMeasurementDto("1", 2),
+                new BeaconMeasurementDto("2", 3),
+                new BeaconMeasurementDto("0", 3),
+                new BeaconMeasurementDto("2", 3),
+                new BeaconMeasurementDto("1", 3),
+                null
+        ));
+        assertEquals(result.size(), 3);
+    }
+
+    /*
+    @Test
+    public void shouldFindSectorBasedOnMeasurements() {
+        List<BeaconMeasurementDto> list = Arrays.asList(new BeaconMeasurementDto(TEST_MAC_1, -50),
+                new BeaconMeasurementDto(TEST_MAC_2, -60),
+                new BeaconMeasurementDto(TEST_MAC_3, -50));
+        RoomSectorDto sector = sectorService.findSectorBasedOnMeasurements(list);
+        assertNotNull(sector);
+        assertEquals(TEST_ROOM_ID, (long) sector.getRoomId());
+        assertEquals(TEST_SECTOR_ID, (long) sector.getSectorId());
+    }
+    */
+}

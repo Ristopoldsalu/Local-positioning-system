@@ -1,0 +1,58 @@
+var roomId;
+var atDestination = false;
+
+function passMacRssiFromAndroid(mac, rssi) {
+    if (roomId === undefined) {
+        var uri = new Uri(window.location.href);
+        roomId = uri.getQueryParamValue("roomId");
+    }
+    checkIfBeaconIsInRoom(mac, rssi, roomId);
+}
+
+function passBluetoothArrayFromAndroid(array) {
+    if (roomId === undefined) {
+        var uri = new Uri(window.location.href);
+        roomId = uri.getQueryParamValue("roomId");
+    }
+    sendBeaconArrayToServer(array);
+}
+
+function checkIfBeaconIsInRoom(mac, rssi, roomId) {
+    if (atDestination) return;
+
+    $.ajax({
+        url: getContextPath() + "/receiveBluetoothData?mac=" + mac + "&rssi=" + rssi + "&roomId=" + roomId,
+        type: "post",
+        dataType: 'json',
+        async: "false",
+        success: function(data) {
+            atDestination = data['value'];
+            if (!atDestination) {
+                $("#navigation").html('<div id="animated-example" class="animated bounce">' + '<h2>Hakka liikuma!</h2> ' + '</div>');
+            } else {
+                $("#navigation").html('<div><h2>Oled kohal!</h2></div>');
+            }
+        },
+        error: function (e) {
+             $("#navigation").html('<div class="alert alert-danger">' +
+                 '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
+                 '<span class="sr-only">Error:</span> Failed to communicate with server.' +
+                 '</div>');
+        }
+    });
+}
+
+function sendBeaconArrayToServer(array) {
+    $.ajax({
+        url: getContextPath() + "/receiveBluetoothArray",
+        type: "post",
+        dataType: "json",
+        data: array,
+        success: function(data) {
+
+        },
+        error: function(e) {
+
+        }
+    });
+}

@@ -1,0 +1,64 @@
+-- Version 0.2.0
+-- @TeamGREEN - loogilised muutused
+
+--DROP TABLE Path;
+--DROP TABLE Sector;
+--DROP TABLE Beacon;
+--DROP TABLE Room;
+--DROP TABLE Floor;
+--DROP TABLE Building;
+
+
+CREATE TABLE Building
+(
+building_id SERIAL PRIMARY KEY,
+building_name TEXT NOT NULL
+);
+
+CREATE TABLE Floor
+(
+floor_id SERIAL PRIMARY KEY,
+floor_name TEXT,
+floor_number INT NOT NULL,
+building_id INT NOT NULL REFERENCES Building (building_id)
+);
+
+CREATE TABLE Room
+(
+  room_id SERIAL PRIMARY KEY,
+  room_name TEXT NOT NULL,
+  roomtype_id INT NOT NULL REFERENCES RoomType (roomtype_id),
+  room_number TEXT NOT NULL,
+  floor_id INT NOT NULL REFERENCES Floor (floor_id)
+);
+
+CREATE TABLE RoomType
+(
+  roomtype_id SERIAL PRIMARY KEY,
+  roomtype_name TEXT NOT NULL
+);
+
+CREATE TABLE Beacon
+(
+beacon_id SERIAL PRIMARY KEY,
+beacon_macaddr TEXT UNIQUE NOT NULL,
+beacon_tx INTEGER NOT NULL,
+room_id INT NOT NULL REFERENCES Room (room_id),
+beacon_location POINT NOT NULL
+);
+
+CREATE TABLE Sector
+(
+sector_id SERIAL PRIMARY KEY,
+sector_polygon POLYGON NOT NULL,
+sector_name TEXT NOT NULL,
+room_id INT NOT NULL REFERENCES Room (room_id)
+);
+
+CREATE TABLE Path
+(
+path_id SERIAL PRIMARY KEY,
+sector_id_start INT NOT NULL REFERENCES Sector (sector_id),
+sector_id_end INT NOT NULL REFERENCES Sector (sector_id),
+cost INTEGER NOT NULL
+);

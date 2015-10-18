@@ -1,0 +1,16 @@
+package ee.lps.util;
+
+import ee.lps.dto.BeaconMeasurementDTO;
+
+import java.util.Comparator;
+
+/**
+ * Created by risto on 19.08.2015.
+ */
+public class MeasurementComparator implements Comparator<BeaconMeasurementDTO> {
+
+    @Override
+    public int compare(BeaconMeasurementDTO o1, BeaconMeasurementDTO o2) {
+        return Integer.compare(o1.getRssi(), o2.getRssi());
+    }
+}

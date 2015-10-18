@@ -1,0 +1,24 @@
+package ee.lps.service;
+
+import ee.lps.controller.BeaconMeasurement;
+import ee.lps.dto.RoomSectorDto;
+import ee.lps.repository.BeaconRepository;
+import ee.lps.repository.SectorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class SectorServiceImpl implements SectorService {
+    @Autowired
+    private SectorRepository sectorRepository;
+
+    @Autowired
+    private BeaconRepository beaconRepository;
+
+    @Override
+    public RoomSectorDto findSectorBasedOnMeasurements(List<BeaconMeasurement> beaconMeasurements) {
+        return null;
+    }
+}

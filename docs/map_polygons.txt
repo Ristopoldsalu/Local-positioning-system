@@ -1,0 +1,211 @@
+<img src="majakad.jpg" alt="" usemap="#map" />
+<map name="map">
+    <area shape="circle" coords="1841, 460, 10" />
+    <area shape="circle" coords="2281, 515, 11" />
+    <area shape="circle" coords="2223, 1366, 12" />
+    <area shape="circle" coords="1677, 1052, 12" />
+    <area shape="circle" coords="1350, 1299, 11" />
+    <area shape="circle" coords="968, 1528, 11" />
+    <area shape="circle" coords="713, 729, 9" />
+    <area shape="circle" coords="1344, 488, 10" />
+    <area shape="circle" coords="1154, 537, 9" />
+    <area shape="poly" coords="666, 1242, 717, 1319, 741, 1304, 775, 1347, 816, 1316, 729, 1199" />
+    <area shape="poly" coords="963, 884, 876, 933, 798, 801, 896, 749" />
+    <area shape="poly" coords="1040, 1076, 864, 1175, 915, 1247, 1084, 1154" />
+    <area shape="poly" coords="1399, 1045, 1219, 1096, 1085, 1153, 1024, 1037, 1178, 974, 1190, 1006, 1367, 958" />
+    <area shape="poly" coords="1711, 1007, 1542, 1016, 1402, 1045, 1369, 959, 1510, 926, 1714, 917" />
+    <area shape="poly" coords="2051, 958, 1942, 938, 1717, 918, 1713, 1009, 1881, 1021, 2027, 1046" />
+    <area shape="poly" coords="2318, 1156, 2250, 1120, 2027, 1045, 2051, 959, 2208, 1010, 2225, 974, 2381, 1039" />
+    <area shape="poly" coords="2629, 1360, 2693, 1295, 2382, 1039, 2319, 1157, 2468, 1240" />
+    <area shape="poly" coords="2489, 866, 2381, 1037, 2463, 1105, 2584, 941" />
+    <area shape="poly" coords="2490, 864, 2582, 941, 2848, 1120, 2926, 1033, 2752, 896, 2554, 774" />
+    <area shape="poly" coords="2085, 759, 2291, 821, 2469, 897, 2554, 774, 2342, 683, 2126, 617" />
+    <area shape="poly" coords="2009, 597, 1942, 938, 2034, 953, 2126, 617" />
+    <area shape="poly" coords="1824, 483, 1957, 492, 2144, 525, 2126, 615, 2010, 596, 1819, 576" />
+    <area shape="poly" coords="1545, 486, 1726, 477, 1827, 483, 1819, 576, 1683, 564, 1552, 573" />
+    <area shape="poly" coords="1214, 537, 1496, 486, 1546, 485, 1554, 573, 1469, 576, 1244, 624" />
+    <area shape="poly" coords="894, 750, 1072, 677, 1244, 626, 1216, 537, 1042, 593, 855, 671" />
+    <area shape="poly" coords="665, 881, 797, 801, 894, 752, 854, 671, 618, 809" />
+    <area shape="poly" coords="552, 1115, 415, 959, 572, 837, 618, 810, 665, 885, 750, 1004" />
+    <area shape="poly" coords="554, 1117, 666, 1243, 729, 1198, 816, 1316, 915, 1250, 866, 1177, 750, 1007" />
+    <area shape="poly" coords="2465, 1108, 2584, 943, 2848, 1123, 2694, 1295" />
+    <area shape="poly" coords="2084, 761, 2067, 823, 2265, 879, 2431, 957, 2471, 899, 2290, 823" />
+    <area shape="poly" coords="2224, 973, 2380, 1039, 2431, 959, 2265, 880" />
+    <area shape="poly" coords="2035, 955, 2211, 1011, 2266, 879, 2067, 821" />
+    <area shape="poly" coords="1683, 916, 1943, 939, 2011, 596, 1685, 565" />
+    <area shape="poly" coords="1513, 925, 1685, 916, 1686, 567, 1470, 577" />
+    <area shape="poly" coords="1072, 678, 1267, 620, 1470, 578, 1512, 928, 1370, 957, 1322, 759, 1125, 819" />
+    <area shape="poly" coords="1073, 679, 1126, 819, 965, 886, 898, 751" />
+    <area shape="poly" coords="1191, 1006, 1368, 958, 1321, 760, 1125, 820" />
+    <area shape="poly" coords="1022, 1039, 1180, 975, 1126, 818, 952, 891" />
+    <area shape="poly" coords="751, 1006, 866, 1176, 1043, 1077, 953, 891" />
+    <area shape="poly" coords="798, 802, 666, 886, 751, 1005, 875, 935" />
+    <area shape="poly" coords="2137, 1381, 2436, 1567, 2630, 1361, 2472, 1239, 2250, 1121, 2195, 1248" />
+    <area shape="poly" coords="1794, 1009, 2028, 1045, 2250, 1121, 2136, 1381, 1776, 1287" />
+    <area shape="poly" coords="1514, 1019, 1672, 1007, 1794, 1009, 1774, 1289, 1550, 1299" />
+    <area shape="poly" coords="1330, 1061, 1514, 1021, 1552, 1299, 1406, 1329" />
+    <area shape="poly" coords="1150, 1123, 1330, 1059, 1406, 1329, 1264, 1381" />
+    <area shape="poly" coords="984, 1205, 1152, 1121, 1266, 1383, 1128, 1447" />
+    <area shape="poly" coords="966, 1569, 776, 1349, 984, 1207, 1130, 1447" />
+    <area shape="poly" coords="2752, 897, 2928, 1035, 3196, 753, 2978, 579" />
+    <area shape="poly" coords="2554, 773, 2750, 895, 2978, 579, 2744, 431" />
+    <area shape="poly" coords="2342, 683, 2554, 775, 2742, 431, 2488, 319" />
+    <area shape="poly" coords="2128, 615, 2220, 237, 2486, 321, 2344, 683" />
+    <area shape="poly" coords="1728, 479, 1960, 491, 2144, 527, 2220, 239, 1738, 179" />
+    <area shape="poly" coords="1254, 529, 1496, 487, 1730, 475, 1736, 179, 1182, 245" />
+    <area shape="poly" coords="804, 697, 664, 437, 1180, 245, 1254, 527, 1050, 591" />
+    <area shape="poly" coords="222, 753, 664, 437, 808, 695, 572, 837, 418, 959" />
+</map>
+
+
+teeraja punktid:
+<area shape="poly" coords="
+656, 1149,
+716, 1115,
+566, 899,
+712, 809,
+846, 737,
+1012, 655,
+1128, 609,
+1338, 565,
+1406, 547,
+1670, 529,
+1870, 531,
+2072, 565,
+2050, 649,
+2260, 703,
+2474, 785,
+2680, 903,
+2758, 957,
+2634, 879,
+2464, 1175,
+2584, 1255,
+2420, 1153,
+2270, 1083,
+2074, 1015,
+1980, 999,
+2022, 811,
+1740, 973,
+1556, 973,
+1456, 985,
+1364, 1011,
+1264, 1029,
+1148, 1071,
+1088, 1099,
+1032, 1125,
+824, 1251" />
+
+
+3262x2447
+
+Lisan juurde beaconite asukohad:
+
+1.   20:15:03:17:41:89
+2.    20:15:03:17:02:50
+3.    20:15:05:05:07:61
+4.   20:15:03:17:41:92
+5.   20:15:03:02:58:55
+6.   20:15:03:17:38:37
+7.
+8.   20:15:05:05:06:45
+9.
+
+
+20:15:04:30:75:02
+20:15:04:30:58:59
+
+
+
+Summer html image map creator  rectangle circle polygon edit to html preview clear new image ?
+#
+<img src="majakad.jpg" alt="" usemap="#map" />
+<map name="map">
+    <area shape="poly" coords="865, 1172, 918, 1251, 1075, 1154, 1038, 1073" title="koridor32 31-33" />
+    <area shape="poly" coords="1290, 978, 1325, 1058, 1508, 1022, 1495, 931" title="koridor29 28-30-laura-k66k2" />
+    <area shape="poly" coords="735, 990, 664, 886, 600, 823, 520, 881, 651, 1056" title="koridor2 1-3-36" />
+    <area shape="poly" coords="650, 1058, 734, 991, 789, 1066, 722, 1127" title="koridor36 1-2-35-34" />
+    <area shape="poly" coords="650, 1058, 720, 1129, 641, 1202, 557, 1121" title="koridor35 1-2-36-34" />
+    <area shape="poly" coords="640, 1204, 731, 1276, 865, 1171, 788, 1067" title="koridor34 35-36-33" />
+    <area shape="poly" coords="520, 882, 652, 1055, 560, 1121, 417, 956" title="koridor1 35-36-2" />
+    <area shape="poly" coords="799, 803, 666, 889, 600, 826, 741, 733" title="koridor3 2-4-ehis" />
+    <area shape="poly" coords="800, 803, 875, 935, 966, 881, 899, 747" title="sein2" />
+    <area shape="poly" coords="897, 751, 798, 805, 743, 731, 854, 671" title="koridor4 3-5" />
+    <area shape="poly" coords="1075, 678, 899, 751, 857, 670, 1052, 592" title="koridor5 4-6" />
+    <area shape="poly" coords="1189, 542, 1052, 590, 1079, 675, 1216, 633" title="koridor6 5-7-loto" />
+    <area shape="poly" coords="1393, 590, 1216, 635, 1192, 542, 1330, 512" title="koridor7 6-8-k66k1" />
+    <area shape="poly" coords="1549, 569, 1393, 591, 1333, 512, 1525, 482" title="koridor8 7-9-star" />
+    <area shape="poly" coords="1795, 576, 1551, 572, 1528, 482, 1794, 479" title="koridor9 8-10" />
+    <area shape="poly" coords="2006, 594, 1794, 579, 1795, 480, 2018, 506" title="koridor10 9-11-marko" />
+    <area shape="poly" coords="917, 1250, 779, 1351, 734, 1277, 866, 1172" title="koridor33 32-34-anneli" />
+    <area shape="poly" coords="1202, 1097, 1075, 1154, 1039, 1073, 1177, 1015" title="koridor31 30-32-darvet" />
+    <area shape="poly" coords="1325, 1057, 1207, 1097, 1177, 1015, 1289, 974" title="koridor30 29-31-priit" />
+    <area shape="poly" coords="1624, 1010, 1510, 1021, 1495, 932, 1612, 917" title="koridor28 27-29-m55k" />
+    <area shape="poly" coords="1777, 1010, 1624, 1013, 1615, 918, 1785, 923" title="koridor27 26-28" />
+    <area shape="poly" coords="1786, 923, 1780, 1010, 1926, 1031, 1944, 939" title="koridor26 23-27" />
+    <area shape="poly" coords="2033, 956, 2205, 1006, 2169, 1091, 2012, 1045" title="koridor22 21-23" />
+    <area shape="poly" coords="2313, 1153, 2171, 1090, 2207, 1006, 2357, 1072" title="koridor21 20-22" />
+    <area shape="poly" coords="2421, 958, 2486, 848, 2567, 887, 2504, 1000" title="koridor17 14-18" />
+    <area shape="poly" coords="2437, 1117, 2505, 1001, 2425, 956, 2360, 1073" title="koridor18 17-20" />
+    <area shape="poly" coords="2360, 1075, 2315, 1153, 2445, 1226, 2500, 1160, 2436, 1117" title="koridor20 19-18-21-tallink" />
+    <area shape="poly" coords="2689, 1292, 2627, 1358, 2448, 1226, 2500, 1160" title="koridor19 20" />
+    <area shape="poly" coords="2686, 971, 2866, 1099, 2927, 1031, 2752, 887" title="koridor16 15-toivo" />
+    <area shape="poly" coords="2566, 888, 2683, 971, 2749, 888, 2613, 803" title="koridor15 14-16-ants" />
+    <area shape="poly" coords="2487, 846, 2567, 887, 2614, 806, 2537, 764" title="koridor14 13-15-17" />
+    <area shape="poly" coords="2489, 846, 2536, 764, 2346, 681, 2309, 771" title="koridor13 12-14-tes" />
+    <area shape="poly" coords="2123, 614, 2342, 681, 2307, 773, 2093, 705" title="koridor12 11-13-skais" />
+    <area shape="poly" coords="2063, 822, 2093, 707, 1996, 669, 1971, 789" title="koridor25 24-11" />
+    <area shape="poly" coords="2033, 956, 2064, 822, 1969, 792, 1945, 938" title="koridor24 23-25" />
+    <area shape="poly" coords="2019, 504, 1996, 668, 2094, 707, 2145, 530" title="koridor11 10-12-25" />
+    <area shape="poly" coords="1945, 938, 1926, 1031, 2010, 1045, 2034, 956" title="koridor23 24-26-22-BS" />
+    <area shape="poly" coords="2567, 888, 2438, 1118, 2690, 1295, 2867, 1099" title="sein16" />
+    <area shape="poly" coords="2208, 1006, 2361, 1073, 2423, 958, 2258, 887" title="sein15" />
+    <area shape="poly" coords="2036, 954, 2066, 825, 2256, 885, 2210, 1006" title="sein13" />
+    <area shape="poly" coords="2259, 884, 2427, 958, 2490, 849, 2306, 774" title="sein14" />
+    <area shape="poly" coords="2097, 708, 2067, 825, 2262, 885, 2306, 774" title="sein12" />
+    <area shape="poly" coords="1975, 764, 1947, 938, 1683, 914, 1684, 735" title="sein11" />
+    <area shape="poly" coords="1687, 569, 2006, 597, 1977, 767, 1683, 734" title="sein10" />
+    <area shape="poly" coords="1463, 576, 1687, 570, 1684, 732, 1484, 729" title="sein" />
+    <area shape="poly" coords="1509, 927, 1684, 915, 1686, 735, 1483, 731" title="sein9" />
+    <area shape="poly" coords="1193, 1007, 1364, 956, 1318, 761, 1126, 819" title="sein7" />
+    <area shape="poly" coords="1319, 762, 1366, 956, 1510, 927, 1484, 731" title="k66k2 k66k1-koridor29" />
+    <area shape="poly" coords="1288, 617, 1466, 578, 1483, 729, 1319, 761" title="k66k1 koridor7-k66k2" />
+    <area shape="poly" coords="1073, 677, 1289, 617, 1319, 759, 1127, 819" title="sein6" />
+    <area shape="poly" coords="1073, 678, 899, 752, 965, 884, 1129, 821" title="sein4" />
+    <area shape="poly" coords="1039, 1075, 866, 1174, 750, 1010, 951, 894" title="sein3" />
+    <area shape="poly" coords="665, 888, 750, 1009, 876, 936, 798, 803" title="sein1" />
+    <area shape="poly" coords="951, 894, 1040, 1075, 1193, 1009, 1129, 821" title="sein5" />
+    <area shape="poly" coords="3072, 882, 3199, 753, 2978, 576, 2863, 732" title="tubaToivo" />
+    <area shape="poly" coords="2753, 891, 2927, 1034, 3073, 883, 2865, 733" title="tubaToivo 16" />
+    <area shape="poly" coords="2653, 599, 2558, 771, 2753, 891, 2864, 735" title="tubaAnts 15" />
+    <area shape="poly" coords="2741, 433, 2978, 575, 2867, 734, 2653, 599" title="tubaAnts" />
+    <area shape="poly" coords="2415, 495, 2487, 325, 2741, 433, 2653, 597" title="tubaTes" />
+    <area shape="poly" coords="2414, 498, 2653, 599, 2557, 774, 2346, 681" title="tubaTes 13" />
+    <area shape="poly" coords="2172, 424, 2219, 243, 2486, 324, 2415, 498" title="tubaSkais" />
+    <area shape="poly" coords="2124, 615, 2172, 423, 2416, 499, 2346, 683" title="tubaSkais 12" />
+    <area shape="poly" coords="1980, 197, 2218, 243, 2146, 529, 1936, 489" title="tubaMarko" />
+    <area shape="poly" coords="1738, 181, 1980, 199, 1934, 489, 1732, 475" title="tubaMarko 10" />
+    <area shape="poly" coords="1448, 195, 1738, 179, 1732, 475, 1484, 485" title="tubaStar" />
+    <area shape="poly" coords="1182, 241, 1450, 197, 1486, 487, 1256, 527" title="tubaStar 8" />
+    <area shape="poly" coords="924, 325, 1184, 241, 1256, 527, 1026, 597" title="tubaLoto 6" />
+    <area shape="poly" coords="664, 437, 924, 323, 1026, 601, 808, 693" title="tubaLoto" />
+    <area shape="poly" coords="422, 587, 668, 437, 806, 695, 598, 823" title="tubaEhis 3" />
+    <area shape="poly" coords="416, 957, 598, 823, 422, 587, 222, 753" title="tubaEhis" />
+    <area shape="poly" coords="2526, 1475, 2626, 1361, 2450, 1227, 2368, 1357" title="tubaTallink" />
+    <area shape="poly" coords="2366, 1357, 2526, 1473, 2436, 1569, 2292, 1461" title="tubaTallink" />
+    <area shape="poly" coords="2136, 1383, 2292, 1461, 2362, 1355, 2182, 1267" title="tubaTallink" />
+    <area shape="poly" coords="2254, 1123, 2452, 1225, 2366, 1355, 2186, 1265" title="tubaTallink 20" />
+    <area shape="poly" coords="2016, 1201, 2048, 1051, 2250, 1121, 2186, 1265" title="tubaBS" />
+    <area shape="poly" coords="2014, 1203, 2186, 1265, 2134, 1381, 1984, 1329" title="tubaBS" />
+    <area shape="poly" coords="1772, 1291, 1982, 1327, 2016, 1201, 1784, 1157" title="tubaBS" />
+    <area shape="poly" coords="1794, 1013, 2048, 1051, 2014, 1201, 1784, 1157" title="tubaBS 23" />
+    <area shape="poly" coords="1528, 1161, 1782, 1157, 1772, 1289, 1552, 1299" title="tubaM55k" />
+    <area shape="poly" coords="1512, 1023, 1796, 1013, 1784, 1157, 1530, 1159" title="tubaM55k 28" />
+    <area shape="poly" coords="1364, 1187, 1400, 1325, 1550, 1297, 1530, 1159" title="tubaLaura" />
+    <area shape="poly" coords="1328, 1061, 1512, 1021, 1532, 1159, 1362, 1189" title="tubaLaura 29" />
+    <area shape="poly" coords="1402, 1327, 1364, 1187, 1202, 1241, 1262, 1377" title="tubaPriit" />
+    <area shape="poly" coords="1146, 1117, 1328, 1059, 1364, 1185, 1204, 1241" title="tubaPriit 30" />
+    <area shape="poly" coords="1202, 1241, 1262, 1379, 1132, 1443, 1058, 1331" title="tubaDarvet" />
+    <area shape="poly" coords="980, 1207, 1150, 1119, 1204, 1239, 1058, 1331" title="tubaDarvet 31" />
+    <area shape="poly" coords="1058, 1333, 872, 1465, 964, 1569, 1132, 1447" title="tubaAnneli" />
+    <area shape="poly" coords="778, 1353, 872, 1465, 1058, 1333, 982, 1207" title="tubaAnneli 33" />
+</map>

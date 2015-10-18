@@ -1,0 +1,10 @@
+package ee.lps.service;
+
+import ee.lps.dto.RoomDto;
+
+import javax.transaction.Transactional;
+
+public interface RoomService {
+    @Transactional
+    RoomDto findRoomById(Long roomId);
+}

@@ -1,0 +1,121 @@
+package ee.lps.util;
+
+import ee.lps.model.Path;
+import ee.lps.model.PathPoint;
+
+import java.util.*;
+
+import static java.util.stream.Collectors.toList;
+
+public class ShortestPath {
+    private final List<Path> paths;
+    private Set<PathPoint> settledNodes;
+    private Set<PathPoint> unSettledNodes;
+    private Map<PathPoint, PathPoint> predecessors;
+    private Map<PathPoint, Double> distances;
+
+    public ShortestPath(Iterable<Path> pathIterable) {
+        this(createPathsList(pathIterable));
+    }
+
+    public ShortestPath(List<Path> paths) {
+        this.paths = paths;
+    }
+
+    public void execute(PathPoint source) {
+        settledNodes = new HashSet<>();
+        unSettledNodes = new HashSet<>();
+        distances = new HashMap<>();
+        predecessors = new HashMap<>();
+        distances.put(source, 0.0);
+        unSettledNodes.add(source);
+        while (unSettledNodes.size() > 0) {
+            PathPoint node = getMinimum(unSettledNodes);
+            settledNodes.add(node);
+            unSettledNodes.remove(node);
+            findMinimalDistances(node);
+        }
+    }
+
+    private void findMinimalDistances(PathPoint node) {
+        List<PathPoint> adjacentNodes = getNeighbors(node);
+        for (PathPoint target : adjacentNodes) {
+            if (getShortestDistance(target) > getShortestDistance(node) + getDistance(node, target)) {
+                distances.put(target, getShortestDistance(node) + getDistance(node, target));
+                predecessors.put(target, node);
+                unSettledNodes.add(target);
+            }
+        }
+    }
+
+    private double getDistance(PathPoint from, PathPoint to) {
+        for (Path path : paths) {
+            if (pathConnects(path, from, to)) return path.calculateCost();
+        }
+        throw new RuntimeException("Should not happen");
+    }
+
+    private boolean pathConnects(Path path, PathPoint from, PathPoint to) {
+        return path.getStartPathPoint().equals(from) && path.getEndPathPoint().equals(to) ||
+                path.getEndPathPoint().equals(from) && path.getStartPathPoint().equals(to);
+    }
+
+    private List<PathPoint> getNeighbors(PathPoint node) {
+        return node.getAllNeighbors().stream().filter(this::isNotSettled).collect(toList());
+    }
+
+    private PathPoint getMinimum(Set<PathPoint> PathPointes) {
+        PathPoint minimum = null;
+        for (PathPoint PathPoint : PathPointes) {
+            if (minimum == null) {
+                minimum = PathPoint;
+            } else {
+                if (getShortestDistance(PathPoint) < getShortestDistance(minimum)) {
+                    minimum = PathPoint;
+                }
+            }
+        }
+        return minimum;
+    }
+
+    private boolean isNotSettled(PathPoint pathPoint) {
+        return !isSettled(pathPoint);
+    }
+
+    private boolean isSettled(PathPoint pathPoint) {
+        return settledNodes.contains(pathPoint);
+    }
+
+    private double getShortestDistance(PathPoint destination) {
+        Double distance = distances.get(destination);
+        return distance == null ? Double.MAX_VALUE : distance;
+    }
+
+    /*
+     * This method returns the path from the source to the selected target and
+     * NULL if no path exists
+     */
+    public LinkedList<PathPoint> getPath(PathPoint target) {
+        LinkedList<PathPoint> path = new LinkedList<>();
+        PathPoint step = target;
+        // check if a path exists
+        if (predecessors.get(step) == null) {
+            return null;
+        }
+        path.add(step);
+        while (predecessors.get(step) != null) {
+            step = predecessors.get(step);
+            path.add(step);
+        }
+        // Put it into the correct order
+        Collections.reverse(path);
+        return path;
+    }
+
+    private static List<Path> createPathsList(Iterable<Path> pathIterable) {
+        Iterator<Path> pathIterator = pathIterable.iterator();
+        List<Path> paths = new ArrayList<>();
+        while (pathIterator.hasNext()) paths.add(pathIterator.next());
+        return paths;
+    }
+}

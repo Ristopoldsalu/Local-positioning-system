@@ -1,0 +1,127 @@
+09:49:06.622 [INFO] [org.springframework.web.context.ContextLoader] [main] Root WebApplicationContext: initialization started 
+09:49:06.788 [INFO] [org.springframework.web.context.support.XmlWebApplicationContext] [main] Refreshing Root WebApplicationContext: startup date [Thu Aug 27 09:49:06 EEST 2015]; root of context hierarchy 
+09:49:06.887 [INFO] [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] [main] Loading XML bean definitions from ServletContext resource [/WEB-INF/spring.xml] 
+09:49:07.138 [INFO] [org.springframework.web.context.ContextLoader] [main] Root WebApplicationContext: initialization completed in 487 ms 
+09:49:07.320 [INFO] [org.springframework.web.servlet.DispatcherServlet] [main] FrameworkServlet 'dispatcher': initialization started 
+09:49:07.331 [INFO] [org.springframework.web.context.support.XmlWebApplicationContext] [main] Refreshing WebApplicationContext for namespace 'dispatcher-servlet': startup date [Thu Aug 27 09:49:07 EEST 2015]; parent: Root WebApplicationContext 
+09:49:07.333 [INFO] [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] [main] Loading XML bean definitions from ServletContext resource [/WEB-INF/dispatcher-servlet.xml] 
+09:49:08.265 [INFO] [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer] [main] Loading properties file from ServletContext resource [/WEB-INF/db-properties.xml] 
+09:49:08.426 [INFO] [org.springframework.jdbc.datasource.DriverManagerDataSource] [main] Loaded JDBC driver: org.postgresql.Driver 
+09:49:08.558 [INFO] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] [main] Building JPA container EntityManagerFactory for persistence unit 'default' 
+09:49:08.602 [INFO] [org.hibernate.jpa.internal.util.LogHelper] [main] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...] 
+09:49:08.740 [INFO] [org.hibernate.Version] [main] HHH000412: Hibernate Core {4.3.8.Final} 
+09:49:08.745 [INFO] [org.hibernate.cfg.Environment] [main] HHH000206: hibernate.properties not found 
+09:49:08.747 [INFO] [org.hibernate.cfg.Environment] [main] HHH000021: Bytecode provider name : javassist 
+09:49:09.407 [INFO] [org.hibernate.annotations.common.Version] [main] HCANN000001: Hibernate Commons Annotations {4.0.5.Final} 
+09:49:09.981 [INFO] [org.hibernate.dialect.Dialect] [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL9Dialect 
+09:49:10.008 [INFO] [org.hibernate.engine.jdbc.internal.LobCreatorBuilder] [main] HHH000424: Disabling contextual LOB creation as createClob() method threw error : java.lang.reflect.InvocationTargetException 
+09:49:10.285 [INFO] [org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory] [main] HHH000397: Using ASTQueryTranslatorFactory 
+09:49:10.396 [INFO] [org.hibernate.validator.internal.util.Version] [main] HV000001: Hibernate Validator 5.1.3.Final 
+09:49:11.260 [INFO] [org.hibernate.tool.hbm2ddl.SchemaUpdate] [main] HHH000228: Running hbm2ddl schema update 
+09:49:11.260 [INFO] [org.hibernate.tool.hbm2ddl.SchemaUpdate] [main] HHH000102: Fetching database metadata 
+09:49:11.290 [INFO] [org.hibernate.tool.hbm2ddl.SchemaUpdate] [main] HHH000396: Updating schema 
+09:49:11.376 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.beacon 
+09:49:11.376 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [room_id, beacon_id, beacon_macaddr, corridor_pathpoint_id] 
+09:49:11.376 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [beacon_corridor_pathpoint_id_fkey, beacon_room_id_fkey] 
+09:49:11.377 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [beacon_beacon_macaddr_key, beacon_pkey] 
+09:49:11.406 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.building 
+09:49:11.407 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [building_id, building_name] 
+09:49:11.407 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [] 
+09:49:11.407 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [building_pkey] 
+09:49:11.435 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.floor 
+09:49:11.435 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [floor_name, building_id, floor_id, floor_number] 
+09:49:11.435 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [floor_building_id_fkey] 
+09:49:11.435 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [floor_pkey] 
+09:49:11.459 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.path 
+09:49:11.459 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [pathpoint_id_start, pathpoint_id_end, path_id, path_handycap] 
+09:49:11.459 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [path_pathpoint_id_start_fkey, path_pathpoint_id_end_fkey] 
+09:49:11.459 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [path_pkey] 
+09:49:11.495 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.pathpoint 
+09:49:11.495 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [pathpoint_id, pathpoint_name, pathpoint_location] 
+09:49:11.496 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [] 
+09:49:11.496 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [pathpoint_pkey] 
+09:49:11.519 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.room 
+09:49:11.520 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [room_id, room_name, roomtype_id, room_number, floor_id] 
+09:49:11.520 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [room_floor_id_fkey] 
+09:49:11.520 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [room_pkey] 
+09:49:11.548 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.roomtype 
+09:49:11.549 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [roomtype_name, roomtype_id] 
+09:49:11.549 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [] 
+09:49:11.549 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [roomtype_pkey] 
+09:49:11.617 [INFO] [org.hibernate.tool.hbm2ddl.SchemaUpdate] [main] HHH000232: Schema update complete 
+09:49:12.163 [INFO] [org.springframework.web.servlet.handler.SimpleUrlHandlerMapping] [main] Mapped URL path [/res/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0' 
+09:49:12.758 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] [main] Mapped "{[/loader],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public org.springframework.web.servlet.ModelAndView ee.lps.controller.BeaconController.loader() 
+09:49:12.759 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] [main] Mapped "{[/beacon],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public org.springframework.web.servlet.ModelAndView ee.lps.controller.BeaconController.getBeaconByMac(java.lang.String) 
+09:49:12.760 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] [main] Mapped "{[/room/find],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}" onto public ee.lps.util.Wrapper.ee.lps.util.Wrapper$WrappedObj<ee.lps.dto.UserPositionDTO> ee.lps.controller.NavigationController.findPositionNearRoom(java.util.List<ee.lps.dto.BeaconMeasurementDTO>) 
+09:49:12.761 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] [main] Mapped "{[/guideline],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public ee.lps.util.Wrapper.ee.lps.util.Wrapper$WrappedObj<java.util.List> ee.lps.controller.NavigationController.getGuideline(java.lang.Long,java.lang.Long) 
+09:49:12.761 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] [main] Mapped "{[/rooms],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<ee.lps.dto.RoomDTO> ee.lps.controller.NavigationController.getRooms(java.lang.Long) 
+09:49:12.761 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] [main] Mapped "{[/navigation],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public org.springframework.web.servlet.ModelAndView ee.lps.controller.NavigationController.navigate(java.lang.Long) 
+09:49:13.149 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter] [main] Looking for @ControllerAdvice: WebApplicationContext for namespace 'dispatcher-servlet': startup date [Thu Aug 27 09:49:07 EEST 2015]; parent: Root WebApplicationContext 
+09:49:13.311 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter] [main] Looking for @ControllerAdvice: WebApplicationContext for namespace 'dispatcher-servlet': startup date [Thu Aug 27 09:49:07 EEST 2015]; parent: Root WebApplicationContext 
+09:49:13.415 [INFO] [org.springframework.web.servlet.DispatcherServlet] [main] FrameworkServlet 'dispatcher': initialization completed in 6095 ms 
+10:31:00.537 [INFO] [org.springframework.web.context.ContextLoader] [main] Root WebApplicationContext: initialization started 
+10:31:01.000 [INFO] [org.springframework.web.context.support.XmlWebApplicationContext] [main] Refreshing Root WebApplicationContext: startup date [Thu Aug 27 10:31:01 EEST 2015]; root of context hierarchy 
+10:31:01.062 [INFO] [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] [main] Loading XML bean definitions from ServletContext resource [/WEB-INF/spring.xml] 
+10:31:01.593 [INFO] [org.springframework.web.context.ContextLoader] [main] Root WebApplicationContext: initialization completed in 1049 ms 
+10:31:02.005 [INFO] [org.springframework.web.servlet.DispatcherServlet] [main] FrameworkServlet 'dispatcher': initialization started 
+10:31:02.029 [INFO] [org.springframework.web.context.support.XmlWebApplicationContext] [main] Refreshing WebApplicationContext for namespace 'dispatcher-servlet': startup date [Thu Aug 27 10:31:02 EEST 2015]; parent: Root WebApplicationContext 
+10:31:02.033 [INFO] [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] [main] Loading XML bean definitions from ServletContext resource [/WEB-INF/dispatcher-servlet.xml] 
+10:31:03.056 [INFO] [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer] [main] Loading properties file from ServletContext resource [/WEB-INF/db-properties.xml] 
+10:31:03.306 [INFO] [org.springframework.jdbc.datasource.DriverManagerDataSource] [main] Loaded JDBC driver: org.postgresql.Driver 
+10:31:03.490 [INFO] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] [main] Building JPA container EntityManagerFactory for persistence unit 'default' 
+10:31:03.537 [INFO] [org.hibernate.jpa.internal.util.LogHelper] [main] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...] 
+10:31:03.720 [INFO] [org.hibernate.Version] [main] HHH000412: Hibernate Core {4.3.8.Final} 
+10:31:03.725 [INFO] [org.hibernate.cfg.Environment] [main] HHH000206: hibernate.properties not found 
+10:31:03.727 [INFO] [org.hibernate.cfg.Environment] [main] HHH000021: Bytecode provider name : javassist 
+10:31:04.960 [INFO] [org.hibernate.annotations.common.Version] [main] HCANN000001: Hibernate Commons Annotations {4.0.5.Final} 
+10:31:05.653 [INFO] [org.hibernate.dialect.Dialect] [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL9Dialect 
+10:31:05.685 [INFO] [org.hibernate.engine.jdbc.internal.LobCreatorBuilder] [main] HHH000424: Disabling contextual LOB creation as createClob() method threw error : java.lang.reflect.InvocationTargetException 
+10:31:06.064 [INFO] [org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory] [main] HHH000397: Using ASTQueryTranslatorFactory 
+10:31:06.160 [INFO] [org.hibernate.validator.internal.util.Version] [main] HV000001: Hibernate Validator 5.1.3.Final 
+10:31:07.005 [INFO] [org.hibernate.tool.hbm2ddl.SchemaUpdate] [main] HHH000228: Running hbm2ddl schema update 
+10:31:07.006 [INFO] [org.hibernate.tool.hbm2ddl.SchemaUpdate] [main] HHH000102: Fetching database metadata 
+10:31:07.043 [INFO] [org.hibernate.tool.hbm2ddl.SchemaUpdate] [main] HHH000396: Updating schema 
+10:31:07.087 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.beacon 
+10:31:07.087 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [room_id, beacon_id, beacon_macaddr, corridor_pathpoint_id] 
+10:31:07.087 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [beacon_corridor_pathpoint_id_fkey, beacon_room_id_fkey] 
+10:31:07.088 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [beacon_beacon_macaddr_key, beacon_pkey] 
+10:31:07.125 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.building 
+10:31:07.125 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [building_id, building_name] 
+10:31:07.125 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [] 
+10:31:07.125 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [building_pkey] 
+10:31:07.154 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.floor 
+10:31:07.155 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [floor_name, building_id, floor_id, floor_number] 
+10:31:07.155 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [floor_building_id_fkey] 
+10:31:07.155 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [floor_pkey] 
+10:31:07.182 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.path 
+10:31:07.182 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [pathpoint_id_start, pathpoint_id_end, path_id, path_handycap] 
+10:31:07.183 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [path_pathpoint_id_start_fkey, path_pathpoint_id_end_fkey] 
+10:31:07.183 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [path_pkey] 
+10:31:07.223 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.pathpoint 
+10:31:07.223 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [pathpoint_id, pathpoint_name, pathpoint_location] 
+10:31:07.223 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [] 
+10:31:07.223 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [pathpoint_pkey] 
+10:31:07.261 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.room 
+10:31:07.261 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [room_id, room_name, roomtype_id, room_number, floor_id] 
+10:31:07.261 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [fk_5ngnwo8udxpw56ovfkxglvh4b, room_floor_id_fkey] 
+10:31:07.262 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [room_pkey] 
+10:31:07.298 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000261: Table found: public.roomtype 
+10:31:07.298 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000037: Columns: [roomtype_name, roomtype_id] 
+10:31:07.298 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000108: Foreign keys: [] 
+10:31:07.298 [INFO] [org.hibernate.tool.hbm2ddl.TableMetadata] [main] HHH000126: Indexes: [roomtype_pkey] 
+10:31:07.299 [INFO] [org.hibernate.tool.hbm2ddl.SchemaUpdate] [main] HHH000232: Schema update complete 
+10:31:07.890 [INFO] [org.springframework.web.servlet.handler.SimpleUrlHandlerMapping] [main] Mapped URL path [/res/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0' 
+10:31:08.725 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] [main] Mapped "{[/loader],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public org.springframework.web.servlet.ModelAndView ee.lps.controller.BeaconController.loader() 
+10:31:08.726 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] [main] Mapped "{[/beacon],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public org.springframework.web.servlet.ModelAndView ee.lps.controller.BeaconController.getBeaconByMac(java.lang.String) 
+10:31:08.729 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] [main] Mapped "{[/rooms],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<ee.lps.dto.RoomDTO> ee.lps.controller.NavigationController.getRooms(java.lang.Long) 
+10:31:08.730 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] [main] Mapped "{[/guideline],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public ee.lps.util.Wrapper.ee.lps.util.Wrapper$WrappedObj<java.util.List> ee.lps.controller.NavigationController.getGuideline(java.lang.Long,java.lang.Long) 
+10:31:08.730 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] [main] Mapped "{[/room/find],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}" onto public ee.lps.util.Wrapper.ee.lps.util.Wrapper$WrappedObj<ee.lps.dto.UserPositionDTO> ee.lps.controller.NavigationController.findPositionNearRoom(java.util.List<ee.lps.dto.BeaconMeasurementDTO>) 
+10:31:08.730 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] [main] Mapped "{[/navigation],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public org.springframework.web.servlet.ModelAndView ee.lps.controller.NavigationController.navigate(java.lang.Long) 
+10:31:09.082 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter] [main] Looking for @ControllerAdvice: WebApplicationContext for namespace 'dispatcher-servlet': startup date [Thu Aug 27 10:31:02 EEST 2015]; parent: Root WebApplicationContext 
+10:31:09.146 [INFO] [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter] [main] Looking for @ControllerAdvice: WebApplicationContext for namespace 'dispatcher-servlet': startup date [Thu Aug 27 10:31:02 EEST 2015]; parent: Root WebApplicationContext 
+10:31:09.258 [INFO] [org.springframework.web.servlet.DispatcherServlet] [main] FrameworkServlet 'dispatcher': initialization completed in 7252 ms 
+12:46:25.630 [WARN] [org.springframework.web.servlet.PageNotFound] [674532143@qtp-1499458969-45] No mapping found for HTTP request with URI [/lps/] in DispatcherServlet with name 'dispatcher' 

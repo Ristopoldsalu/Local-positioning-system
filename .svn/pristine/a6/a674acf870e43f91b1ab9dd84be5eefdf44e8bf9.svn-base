@@ -1,0 +1,19 @@
+SVN serveri tuleb testida Tieto sisev6rgust (Tieto Guest)
+http://194.106.118.77/Jenkins
+
+Nutitelefon peab ka olema sisev6rgus testimiseks
+
+http://www.aislelabs.com/reports/beacon-guide/
+
+BluetoothUtil test results
+/**
+ * MAC:20:15:03:17:02:50 RSSI:-89    ---- ROOM 3 STAR
+ MAC:20:15:05:05:06:45 RSSI:-78    ---- ROOM 14 BS
+ MAC:20:15:03:17:41:92 RSSI:-82    ---- ROOM 4 MARKO
+ distance1:15.848931924611133 @@ distance2:4.466835921509632 @@ distance3:7.079457843841379 @@
+
+ double resultOne = BluetoothUtil.calculateDistance(-89, -65);
+ double resultTwo = BluetoothUtil.calculateDistance(-78, -65);
+ double resultThree = BluetoothUtil.calculateDistance(-82, -65);
+
+ */

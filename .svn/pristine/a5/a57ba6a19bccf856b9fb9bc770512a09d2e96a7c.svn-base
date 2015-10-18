@@ -1,0 +1,9 @@
+package ee.lps.repository;
+
+import ee.lps.model.Beacon;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface BeaconRepository extends CrudRepository<Beacon, Long> {
+}

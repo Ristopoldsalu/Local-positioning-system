@@ -1,0 +1,17 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<head>
+    <title>LPS 30000</title>
+
+    <link rel="stylesheet" href="${contextPath}/res/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${contextPath}/res/css/loader.css">
+
+    <script src="${contextPath}/res/js/jquery-2.1.4.min.js"></script>
+    <script src="${contextPath}/res/js/bootstrap.min.js"></script>
+    <script src="${contextPath}/res/js/context.js"></script>
+    <script src="${contextPath}/res/js/listpopulate.js"></script>
+    <script src="${contextPath}/res/js/beacons.js"></script>
+
+    <meta name="_contextPath" content="${contextPath}"/>
+</head>

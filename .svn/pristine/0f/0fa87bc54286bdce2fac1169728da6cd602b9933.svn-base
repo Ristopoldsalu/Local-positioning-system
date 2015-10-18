@@ -1,0 +1,23 @@
+package ee.lps.service;
+
+import ee.lps.controller.BeaconMeasurement;
+import ee.lps.model.Sector;
+import ee.lps.repository.SectorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Iterator;
+import java.util.List;
+
+@Service
+public class SectorServiceImpl implements SectorService {
+    @Autowired
+    private SectorRepository sectorRepository;
+
+    @Override
+    public Sector findSectorBasedOnMeasurements(List<BeaconMeasurement> beaconMeasurements) {
+        // TODO: implement it.
+        Iterator<Sector> iterator = sectorRepository.findAll().iterator();
+        return iterator.hasNext() ? iterator.next() : null;
+    }
+}

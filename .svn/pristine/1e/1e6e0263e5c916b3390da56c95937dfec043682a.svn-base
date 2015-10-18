@@ -1,0 +1,35 @@
+package ee.lps.util;
+
+import ee.lps.dto.BeaconMeasurementDTO;
+
+import java.util.*;
+
+/**
+ * Created by risto on 20.08.2015.
+ */
+public class ChooseBestMacsForPositioning {
+
+    public List<BeaconMeasurementDTO> chooseBestMacs(Collection<BeaconMeasurementDTO> listOfMeasurements) {
+        return removeMacsNotUsableForPositioning(sortMacsByRSSI(listOfMeasurements));
+    }
+
+    private List<BeaconMeasurementDTO> sortMacsByRSSI(Collection<BeaconMeasurementDTO> filteredMeasurements) {
+        List<BeaconMeasurementDTO> sortedList = new ArrayList<>();
+        sortedList.addAll(filteredMeasurements);
+        Collections.sort(sortedList, new MeasurementComparator());
+        Collections.reverse(sortedList);
+
+        return sortedList;
+    }
+
+    private List<BeaconMeasurementDTO> removeMacsNotUsableForPositioning(List<BeaconMeasurementDTO> listOfMeasurements) {
+        List<BeaconMeasurementDTO> reducedList = new ArrayList<>();
+        if (listOfMeasurements.size() > 3) for (int index = 0; index < listOfMeasurements.size(); index++)
+            if (index > 3) {
+                if (listOfMeasurements.get(index).getRssi() > -90) reducedList.add(listOfMeasurements.get(index));
+
+            } else reducedList.add(listOfMeasurements.get(index));
+        return reducedList;
+    }
+
+}

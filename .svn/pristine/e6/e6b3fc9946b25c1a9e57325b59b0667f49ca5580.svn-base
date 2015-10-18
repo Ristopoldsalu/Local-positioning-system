@@ -1,0 +1,33 @@
+package ee.lps.model;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "PathPoint")
+@NamedNativeQuery(name = "Sector.getSectorContainingPoint", resultClass = PathPoint.class,
+        query = "SELECT * FROM Sector s WHERE s.sector_polygon @> point_in(textout (?1 || ',' || ?2))")
+public class PathPoint {
+    @Id
+    @GeneratedValue
+    @Column(name = "pathpoint_id")
+    private Long pathPointId;
+
+    @Column(name = "pathpoint_location")
+    private String location;
+
+    public Long getPathPointId() {
+        return pathPointId;
+    }
+
+    public void setPathPointId(Long pathPointId) {
+        this.pathPointId = pathPointId;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+}

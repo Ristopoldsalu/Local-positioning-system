@@ -1,0 +1,68 @@
+-- Version 0.2.0
+-- @TeamGREEN - loogilised muutused
+
+CREATE TABLE Building
+(
+building_id SERIAL PRIMARY KEY,
+building_name TEXT NOT NULL
+);
+
+CREATE TABLE Floor
+(
+floor_id SERIAL PRIMARY KEY,
+floor_name TEXT,
+floor_number INT NOT NULL,
+building_id INT NOT NULL REFERENCES Building (building_id)
+);
+
+CREATE TABLE Room
+(
+  room_id SERIAL PRIMARY KEY,
+  room_name TEXT NOT NULL,
+  room_number TEXT NOT NULL,
+  floor_id INT NOT NULL REFERENCES Floor (floor_id)
+);
+
+CREATE TABLE Beacon
+(
+beacon_id SERIAL PRIMARY KEY,
+beacon_macaddr TEXT UNIQUE NOT NULL,
+beacon_tx INTEGER NOT NULL,
+room_id INT NOT NULL REFERENCES Room (room_id),
+point_id INT NOT NULL REFERENCES Point (point_id)
+);
+
+CREATE TABLE Sector
+(
+sector_id SERIAL PRIMARY KEY,
+sector_polygon POLYGON NOT NULL,
+sector_name TEXT NOT NULL,
+room_id INT NOT NULL REFERENCES Room (room_id)
+);
+
+CREATE TABLE Path
+(
+path_id SERIAL PRIMARY KEY,
+sector_id_start INT NOT NULL REFERENCES Sector (sector_id),
+sector_id_end INT NOT NULL REFERENCES Sector (sector_id),
+cost INTEGER NOT NULL
+);
+
+CREATE TABLE Point
+(
+point_id SERIAL PRIMARY KEY,
+point_x INTEGER NOT NULL,
+point_y INTEGER NOT NULL
+);
+
+CREATE TABLE Polygon
+(
+polygon_id SERIAL PRIMARY KEY
+);
+
+CREATE TABLE PolygonPoint
+(
+polygon_point_id SERIAL PRIMARY KEY,
+polygon_id INTEGER REFERENCES Polygon(polygon_id),
+point_id INTEGER REFERENCES Point(point_id)
+);

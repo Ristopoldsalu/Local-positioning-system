@@ -1,0 +1,37 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
+<html>
+<jsp:include page="header.jsp"/>
+<link rel="stylesheet" href="${contextPath}/res/css/pretty.css">
+<body background="${contextPath}/res/images/squairy_light.png">
+    <div class="container text-center">
+        <c:choose>
+            <c:when test="${not empty room}">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <h1>Sihtkoht: "<c:out value="${room.roomName}"/>"</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <div id="navigation">
+                            <div id="animated-example" class="animated bounce">
+                            <h2>Otsin majakaid...</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <h1>Valitud sihtkohta ei eksisteeri.</h1>
+                    </div>
+                </div>
+            </c:otherwise>
+        </c:choose>
+    </div>
+</body>
+</html>

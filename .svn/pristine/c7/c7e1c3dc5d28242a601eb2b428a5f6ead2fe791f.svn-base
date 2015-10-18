@@ -1,0 +1,34 @@
+package ee.lps.model;
+
+import javax.persistence.*;
+
+import static javax.persistence.FetchType.*;
+
+@Entity
+@Table(name = "Sector")
+public class Sector {
+    @Id
+    @GeneratedValue
+    @Column(name = "sector_id")
+    private Long sectorId;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
+
+    public Long getSectorId() {
+        return sectorId;
+    }
+
+    public void setSectorId(Long sectorId) {
+        this.sectorId = sectorId;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+}

@@ -1,0 +1,25 @@
+
+function populateRoomList(rooms) {
+    $.each(rooms, function (i, room) {
+        $('#roomSelection').append($('<option>', {
+            value: room.roomId,
+            text : room.roomName + ' ' + room.roomNumber
+        }));
+    });
+}
+
+function queryRoomsList(buildingId, contextPath) {
+    $.ajax({
+        url: contextPath + '/rooms',
+        data: {buildingId: String(buildingId)},
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function(response) {
+            console.log("succeeded ");
+            populateRoomList(response);
+        },
+        error: function() {
+            console.log("failed ");
+        }
+    });
+}

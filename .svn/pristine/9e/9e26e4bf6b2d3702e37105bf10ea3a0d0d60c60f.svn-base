@@ -1,0 +1,48 @@
+package ee.lps.controller;
+
+import ee.lps.service.BeaconService;
+import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.web.servlet.ModelAndView;
+
+import static junit.framework.TestCase.assertNull;
+import static org.mockito.Mockito.when;
+
+public class BeaconControllerTest {
+    @InjectMocks
+    private BeaconController controller;
+
+    @Mock
+    private BeaconService beaconServiceMock;
+
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+        when(beaconServiceMock.getBuildingNameByMac("17:17:17:AA:AA:AA")).thenReturn("Big building");
+    }
+
+    @Test
+    public void getBeaconByMacThatIsNull() {
+        ModelAndView response = controller.getBeaconByMac(null);
+        assertNull(response.getModelMap().get("buildingName"));
+    }
+
+    @Test
+    public void getBeaconByMacThatExists() {
+        ModelAndView response = controller.getBeaconByMac("17:17:17:AA:AA:AA");
+        TestCase.assertEquals("Big building", response.getModelMap().get("buildingName"));
+    }
+
+    @Test
+    public void getBeaconByMacThatNotExists() {
+        ModelAndView response = controller.getBeaconByMac("17:17:17:BB:BB:BB");
+        TestCase.assertEquals(null, response.getModelMap().get("buildingName"));
+
+        response = controller.getBeaconByMac("asdf");
+        TestCase.assertEquals(null, response.getModelMap().get("buildingName"));
+    }
+}

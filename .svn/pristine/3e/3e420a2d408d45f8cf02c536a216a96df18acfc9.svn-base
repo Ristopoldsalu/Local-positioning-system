@@ -1,0 +1,8 @@
+package ee.lps.service;
+
+import org.springframework.transaction.annotation.Transactional;
+
+public interface BeaconService {
+    @Transactional(readOnly = true)
+    String getBuildingNameByMac(String macaddr);
+}

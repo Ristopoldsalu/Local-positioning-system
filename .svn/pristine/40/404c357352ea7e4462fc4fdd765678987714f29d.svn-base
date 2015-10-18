@@ -1,0 +1,69 @@
+package ee.lps.service;
+
+import ee.lps.dto.BeaconMeasurementDTO;
+import ee.lps.dto.GuidelineDTO;
+import ee.lps.dto.UserPositionDTO;
+import ee.lps.model.Beacon;
+import ee.lps.model.PathPoint;
+import ee.lps.repository.BeaconRepository;
+import ee.lps.repository.RoomRepository;
+import ee.lps.repository.PathPointRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+
+import static java.util.stream.Collectors.*;
+
+@Service
+public class NavigationServiceImpl implements NavigationService {
+    public static final int MIN_RSSI = -75;
+
+    @Autowired
+    private BeaconRepository beaconRepository;
+
+    @Autowired
+    private PathPointRepository pathPointRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @Override
+    public UserPositionDTO findUserPosition(Collection<BeaconMeasurementDTO> measurements) {
+        BeaconMeasurementDTO bestMeasurement = chooseBestMeasurement(removeNonExistingBeacons(measurements));
+        if (bestMeasurement == null) return null;
+        return new UserPositionDTO(beaconRepository.findByMac(bestMeasurement.getMac()));
+    }
+
+    @Override
+    public GuidelineDTO getGuidelines(Long fromPathPointId, Long toRoomId) {
+        PathPoint startPathPoint = pathPointRepository.findOne(fromPathPointId);
+        List<PathPoint> possibleDestinations = getRoomCorridorPathPoints(toRoomId);
+        return null;
+    }
+
+    // TODO: Maybe it is smarter to use a named query.
+    private List<PathPoint> getRoomCorridorPathPoints(Long toRoomId) {
+        return roomRepository.findOne(toRoomId).getBeacons().stream().map(Beacon::getCorridorPathPoint).collect(toList());
+    }
+
+    private Collection<BeaconMeasurementDTO> removeNonExistingBeacons(Collection<BeaconMeasurementDTO> measurements) {
+        return measurements.stream().filter(this::isValidMac).collect(toList());
+    }
+
+    private boolean isValidMac(BeaconMeasurementDTO measurement) {
+        return beaconRepository.findByMac(measurement.getMac()) != null;
+    }
+
+    private BeaconMeasurementDTO chooseBestMeasurement(Collection<BeaconMeasurementDTO> measurements) {
+        if (measurements.size() == 0) return null;
+        BeaconMeasurementDTO bestMeasurement = getBestRssiMeasurement(measurements);
+        return bestMeasurement.getRssi() >= MIN_RSSI ? bestMeasurement : null;
+    }
+
+    private BeaconMeasurementDTO getBestRssiMeasurement(Collection<BeaconMeasurementDTO> measurements) {
+        return measurements.stream().max(Comparator.comparingInt(BeaconMeasurementDTO::getRssi)).get();
+    }
+}

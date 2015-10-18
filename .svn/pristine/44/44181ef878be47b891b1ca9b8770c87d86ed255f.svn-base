@@ -1,0 +1,59 @@
+package ee.lps.model;
+
+public class Beacon {
+    private int beaconId;
+    private String beaconLocation;
+    private String beaconMACAddress;
+    private int roomId;
+
+    public Beacon(int beaconId, String beaconLocation, String beaconMACAddress, int roomId) {
+        this.beaconId = beaconId;
+        this.beaconLocation = beaconLocation;
+        this.beaconMACAddress = beaconMACAddress;
+        this.roomId = roomId;
+    }
+
+    public Beacon() {}
+
+    public int getBeaconId() {
+        return beaconId;
+    }
+
+    public void setBeaconId(int beaconId) {
+        this.beaconId = beaconId;
+    }
+
+    public String getBeaconLocation() {
+        return beaconLocation;
+    }
+
+    public void setBeaconLocation(String beaconLocation) {
+        this.beaconLocation = beaconLocation;
+    }
+
+    public String getBeaconMACAddress() {
+        return beaconMACAddress;
+    }
+
+    public void setBeaconMACAddress(String beaconMACAddress) {
+        this.beaconMACAddress = beaconMACAddress;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    @Override
+    public String toString() {
+        return "Beacon{" +
+                "beaconId=" + beaconId +
+                ", beaconLocation='" + beaconLocation + '\'' +
+                ", beaconMACAddress='" + beaconMACAddress + '\'' +
+                ", roomId=" + roomId +
+                '}';
+    }
+}

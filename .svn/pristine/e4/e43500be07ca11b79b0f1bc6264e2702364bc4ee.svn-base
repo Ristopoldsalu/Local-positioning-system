@@ -1,0 +1,39 @@
+package ee.lps.util;
+
+import ee.lps.model.PathPoint;
+import org.springframework.data.geo.Point;
+import org.springframework.data.geo.format.PointFormatter;
+
+import java.util.Map;
+
+public class CalculateCorner {
+
+    /**
+     * Calculates the angle (in radians) between two vectors pointing outward from one center
+     *
+     */
+    public static double calculateCornerFromThreePoints(PathPoint center, PathPoint first, PathPoint second) {
+        PointFormatter formatter = PointFormatter.INSTANCE;
+        Point centerPoint = formatter.convert(center.getLocationWithoutBrackets());
+        Point firstPoint = formatter.convert(first.getLocationWithoutBrackets());
+        Point secondPoint = formatter.convert(second.getLocationWithoutBrackets());
+
+
+        double alfa = calculateVectorAngle(centerPoint,firstPoint);
+        double beeta = calculateVectorAngle(firstPoint, secondPoint);
+
+
+
+        return alfa-beeta;
+    }
+
+    public static double calculateVectorAngle(Point point1, Point point2) {
+
+        double dY = point1.getY()-point2.getY();
+        double dX = point1.getX()-point2.getX();
+
+        return Math.atan(dY/dX)*180/Math.PI;
+
+    }
+}
+

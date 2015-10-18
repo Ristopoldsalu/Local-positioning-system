@@ -1,0 +1,7 @@
+package ee.lps.util;
+
+public class BluetoothUtil {
+    public static Double calculateDistance(int rssi, long txPower) {
+        return Math.pow(10D, ((double)(txPower - rssi)) / 20);
+    }
+}

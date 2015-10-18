@@ -1,0 +1,71 @@
+package ee.lps.model;
+
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "Floor")
+public class Floor implements Serializable {
+    @Id
+    @Column(name = "floor_id")
+    private Long floorId;
+    @Column(name = "floor_name")
+    private String floorName;
+    @Column(name = "floor_number")
+    private Integer floorNumber;
+    @Id
+    @Column(name = "building_id")
+    private Long buildingId;
+
+    public Floor(Long floorId, String floorName, Integer floorNumber, Long buildingId) {
+        this.floorId = floorId;
+        this.floorName = floorName;
+        this.floorNumber = floorNumber;
+        this.buildingId = buildingId;
+    }
+
+    public Floor() {}
+
+    public Long getFloorId() {
+        return floorId;
+    }
+
+    public void setFloorId(Long floorId) {
+        this.floorId = floorId;
+    }
+
+    public String getFloorName() {
+        return floorName;
+    }
+
+    public void setFloorName(String floorName) {
+        this.floorName = floorName;
+    }
+
+    public Integer getFloorNumber() {
+        return floorNumber;
+    }
+
+    public void setFloorNumber(Integer floorNumber) {
+        this.floorNumber = floorNumber;
+    }
+
+    public Long getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(Long buildingId) {
+        this.buildingId = buildingId;
+    }
+
+    @Override
+    public String toString() {
+        return "Floor{" +
+                "floorId=" + floorId +
+                ", floorName='" + floorName + '\'' +
+                ", floorNumber=" + floorNumber +
+                ", buildingId=" + buildingId +
+                '}';
+    }
+
+}

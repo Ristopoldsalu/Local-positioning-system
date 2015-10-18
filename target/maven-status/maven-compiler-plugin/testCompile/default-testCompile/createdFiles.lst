@@ -1,0 +1,8 @@
+ee\lps\model\PathTest.class
+ee\lps\service\RoomServiceTest.class
+ee\lps\util\ShortestPathTest.class
+ee\lps\controller\BeaconControllerTest.class
+ee\lps\service\NavigationServiceTest.class
+ee\lps\controller\NavigationControllerTest.class
+ee\lps\service\BuildingServiceTest.class
+ee\lps\service\NavigationTestUtil.class

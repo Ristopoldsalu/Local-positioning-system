@@ -1,0 +1,47 @@
+package ee.lps.dto;
+
+import ee.lps.model.Sector;
+
+public class RoomSectorDto {
+    private Long roomId, sectorId;
+    private String roomName, roomNumber;
+
+    public RoomSectorDto(Sector sector) {
+        this.roomId = sector.getRoom().getRoomId();
+        this.sectorId = sector.getSectorId();
+        this.roomName = sector.getRoom().getRoomName();
+        this.roomNumber = sector.getRoom().getRoomNumber();
+    }
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public Long getSectorId() {
+        return sectorId;
+    }
+
+    public void setSectorId(Long sectorId) {
+        this.sectorId = sectorId;
+    }
+}

@@ -1,0 +1,46 @@
+package ee.lps.model;
+
+import javax.persistence.*;
+
+import static javax.persistence.FetchType.*;
+
+@Entity
+@Table(name = "Path")
+public class Path {
+    @Id
+    @GeneratedValue
+    @Column(name = "path_id")
+    private Long id;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "sector_id_start")
+    private Sector startSector;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "sector_id_end")
+    private Sector endSector;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Sector getStartSector() {
+        return startSector;
+    }
+
+    public void setStartSector(Sector startSector) {
+        this.startSector = startSector;
+    }
+
+    public Sector getEndSector() {
+        return endSector;
+    }
+
+    public void setEndSector(Sector endSector) {
+        this.endSector = endSector;
+    }
+}

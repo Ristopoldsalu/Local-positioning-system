@@ -1,0 +1,69 @@
+package ee.lps.dto;
+
+public class RoomSectorDto {
+    private Long roomId;
+    private String roomName;
+    private String roomNumber;
+
+    private Long floorId;
+    private String floorName;
+    private String floorNumber;
+
+    private Long sectorId;
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public Long getFloorId() {
+        return floorId;
+    }
+
+    public void setFloorId(Long floorId) {
+        this.floorId = floorId;
+    }
+
+    public String getFloorName() {
+        return floorName;
+    }
+
+    public void setFloorName(String floorName) {
+        this.floorName = floorName;
+    }
+
+    public String getFloorNumber() {
+        return floorNumber;
+    }
+
+    public void setFloorNumber(String floorNumber) {
+        this.floorNumber = floorNumber;
+    }
+
+    public Long getSectorId() {
+        return sectorId;
+    }
+
+    public void setSectorId(Long sectorId) {
+        this.sectorId = sectorId;
+    }
+}

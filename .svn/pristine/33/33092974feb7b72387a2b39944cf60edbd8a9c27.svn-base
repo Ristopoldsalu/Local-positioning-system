@@ -1,0 +1,124 @@
+package ee.lps.service;
+
+import ee.lps.dto.BeaconMeasurementDto;
+import ee.lps.dto.RoomSectorDto;
+import ee.lps.model.Beacon;
+import ee.lps.model.Sector;
+import ee.lps.repository.BeaconRepository;
+import ee.lps.repository.SectorRepository;
+import ee.lps.util.data.model.Point;
+import ee.lps.util.trilateration.BluetoothUtil;
+import ee.lps.util.trilateration.NonLinearLeastSquaresSolver;
+import ee.lps.util.trilateration.Trilateration;
+import org.apache.commons.math3.fitting.leastsquares.LeastSquaresOptimizer;
+import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
+@Service
+public class SectorServiceImpl implements SectorService {
+    public static final int MIN_BEACONS_FOR_POS_CALC = 3;
+
+    @Autowired
+    private SectorRepository sectorRepository;
+
+    @Autowired
+    private BeaconRepository beaconRepository;
+
+    @Override
+    public RoomSectorDto findSectorBasedOnMeasurements(List<BeaconMeasurementDto> measurements) {
+
+        List<BeaconDistAndPos> beaconDistPosList = calculateBeaconDistancesPositions(removeDuplicateMacs(measurements));
+
+        Point point = calculatePoint(beaconDistPosList);
+        if (point == null) return null;
+
+        Sector sector = sectorRepository.getSectorContainingPoint(point.getX(), point.getY());
+        return sector != null ? new RoomSectorDto(sector) : null;
+    }
+
+    /**
+     * Removes duplicate beacons by comparing mac address strings. Uses a TreeSet because it allows to use a Comparator.
+     * Other Set implementations use the equals method, in this case it is required to only compare mac strings which
+     * means that it is not possible to use other Set implementations.
+     */
+    Collection<BeaconMeasurementDto> removeDuplicateMacs(List<BeaconMeasurementDto> measurements) {
+        Set<BeaconMeasurementDto> filteredMeasurements = new TreeSet<>(this::compareMacs);
+        filteredMeasurements.addAll(measurements);
+        return filteredMeasurements;
+    }
+
+    private int compareMacs(BeaconMeasurementDto o1, BeaconMeasurementDto o2) {
+        if (o1 == null || o2 == null) return 0;
+        return o1.getMac().toLowerCase().compareTo(o2.getMac().toLowerCase());
+    }
+
+    private Point calculatePoint(List<BeaconDistAndPos> beaconDistAndPosList) {
+        if (beaconDistAndPosList.size() < MIN_BEACONS_FOR_POS_CALC) return null;
+
+        double[] distances = new double[beaconDistAndPosList.size()];
+        double[][] positions = new double[beaconDistAndPosList.size()][];
+
+        for (int index = 0; index < beaconDistAndPosList.size(); index++) {
+            BeaconDistAndPos distAndPos = beaconDistAndPosList.get(index);
+            distances[index] = distAndPos.distance;
+            positions[index] = new double[]{distAndPos.pos.getX(), distAndPos.pos.getY(), 1.0};
+        }
+
+        return solveTrilateration(distances, positions);
+    }
+
+    private Point solveTrilateration(double[] distances, double[][] positions) {
+        Trilateration trilat = new Trilateration(positions, distances);
+        NonLinearLeastSquaresSolver solver = new NonLinearLeastSquaresSolver(trilat, new LevenbergMarquardtOptimizer());
+        LeastSquaresOptimizer.Optimum optimum = solver.solve();
+        double[] pos = optimum.getPoint().toArray();
+
+        Logger logger = Logger.getLogger("MyLog");
+        FileHandler fh;
+        try {
+            // This block configure the logger with handler and formatter
+            //"src/main/webapp/res/log.txt"
+            fh = new FileHandler("src/main/java/ee/lps/log/log/MyFileLog.txt");
+            logger.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+
+            // the following statement is used to log any messages
+            logger.info("XXX: " + pos[0] + " YYY: " + pos[1]);
+
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Point(pos[0], pos[1]);
+    }
+
+    private List<BeaconDistAndPos> calculateBeaconDistancesPositions(Collection<BeaconMeasurementDto> measurements) {
+        List<BeaconDistAndPos> distPosList = new ArrayList<>(measurements.size());
+        for (BeaconMeasurementDto measurement : measurements) addMeasurementToDistPosList(distPosList, measurement);
+        return distPosList;
+    }
+
+    private void addMeasurementToDistPosList(List<BeaconDistAndPos> distAndPosList, BeaconMeasurementDto measurement) {
+        Beacon beacon = beaconRepository.findByMac(measurement.getMac());
+        if (beacon == null) return;
+
+        BeaconDistAndPos distAndPos = new BeaconDistAndPos();
+        distAndPos.distance = BluetoothUtil.calculateDistance(measurement.getRssi(), beacon.getBeaconTx());
+        distAndPos.pos = beacon.getBeaconLocationAsPoint();
+        distAndPosList.add(distAndPos);
+    }
+
+    private static class BeaconDistAndPos {
+        private double distance;
+        private Point pos;
+    }
+}

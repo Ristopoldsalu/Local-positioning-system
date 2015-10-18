@@ -1,0 +1,36 @@
+package ee.lps.service;
+
+import ee.lps.dto.UserPositionDTO;
+import ee.lps.model.Beacon;
+import ee.lps.model.Room;
+import ee.lps.model.Sector;
+import org.mockito.ArgumentMatcher;
+
+import static junit.framework.TestCase.assertEquals;
+import static org.mockito.Matchers.doubleThat;
+
+public class NavigationTestUtil {
+    public static void assertUserPosition(Beacon testBeacon, UserPositionDTO actualPosition) {
+        assertEquals(testBeacon.getRoom().getRoomId(), actualPosition.getRoomId());
+        assertEquals(testBeacon.getRoom().getRoomName(), actualPosition.getRoomName());
+        assertEquals(testBeacon.getRoom().getRoomNumber(), actualPosition.getRoomNumber());
+        assertEquals(testBeacon.getCorridorSector().getSectorId(), actualPosition.getCorridorSectorId());
+    }
+
+    public static Beacon createTestBeacon(String mac, long roomId, String roomName, String roomNumber,
+                                    long corridorSectorId) {
+        Beacon beacon = new Beacon(mac, -100L, "(10, 10)"); // Beacon tx power and position don't matter.
+
+        Room room = new Room();
+        room.setRoomId(roomId);
+        room.setRoomName(roomName);
+        room.setRoomNumber(roomNumber);
+        beacon.setRoom(room);
+
+        Sector corridor = new Sector();
+        corridor.setSectorId(corridorSectorId);
+        beacon.setCorridorSector(corridor);
+
+        return beacon;
+    }
+}

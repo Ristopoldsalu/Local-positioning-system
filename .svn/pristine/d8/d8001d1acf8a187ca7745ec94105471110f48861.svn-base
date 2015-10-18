@@ -1,0 +1,26 @@
+package ee.lps.util;
+
+/**
+ * Wraps primitives. Useful when returning primitives in controllers as json.
+ */
+public class PrimitiveWrapper {
+    public static WrappedBoolean wrap(boolean value) {
+        return new WrappedBoolean(value);
+    }
+
+    public static class WrappedBoolean {
+        private boolean value;
+
+        public WrappedBoolean(boolean value) {
+            this.value = value;
+        }
+
+        public boolean isValue() {
+            return value;
+        }
+
+        public void setValue(boolean value) {
+            this.value = value;
+        }
+    }
+}

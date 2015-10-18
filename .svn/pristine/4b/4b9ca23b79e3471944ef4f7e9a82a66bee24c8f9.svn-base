@@ -1,0 +1,18 @@
+package ee.lps.service;
+
+import ee.lps.model.Beacon;
+import ee.lps.repository.BeaconRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class BeaconServiceImpl implements BeaconService {
+    @Autowired
+    private BeaconRepository beaconRepository;
+
+    @Override
+    public String getBuildingNameByMac(String macaddr) {
+        Beacon beacon = beaconRepository.findByMac(macaddr);
+        return beacon != null ? beacon.getRoom().getFloor().getBuilding().getBuildingName() : null;
+    }
+}

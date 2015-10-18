@@ -1,0 +1,62 @@
+package ee.lps.controller;
+
+import ee.lps.dto.BuildingDTO;
+import ee.lps.dto.RoomDTO;
+import ee.lps.service.BuildingService;
+import ee.lps.service.RoomService;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
+import static java.util.Arrays.asList;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNull;
+import static org.mockito.Mockito.when;
+
+public class BeaconControllerTest {
+    @InjectMocks
+    private BeaconController controller;
+
+    @Mock
+    private BuildingService buildingServiceMock;
+
+    @Mock
+    private RoomService roomService;
+
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+        when(buildingServiceMock.getBuildingByMac("17:17:17:AA:AA:AA")).thenReturn(new BuildingDTO(1L, "Big building"));
+        List<RoomDTO> sampleList = asList(new RoomDTO(5L, "1337A", "Secretary room", null, null),
+                new RoomDTO(4L, "137A", "Boss room", null, null));
+        when(roomService.getRoomsByBuildingId(2L)).thenReturn(sampleList);
+    }
+
+    @Test
+    public void shouldNotPutBuildingToModelIfMacIsNull() {
+        ModelAndView response = controller.getBeaconByMac(null);
+        assertNull(response.getModelMap().get("building"));
+    }
+
+    @Test
+    public void shouldPutBuildingToModelIfMacExists() {
+        ModelAndView response = controller.getBeaconByMac("17:17:17:AA:AA:AA");
+        BuildingDTO building = (BuildingDTO) response.getModelMap().get("building");
+        assertEquals("Big building", building.getBuildingName());
+        assertEquals(1L, building.getBuildingId().longValue());
+    }
+
+    @Test
+    public void shouldNotPutBuildingToModelIfMacNotExists() {
+        ModelAndView response = controller.getBeaconByMac("17:17:17:BB:BB:BB");
+        assertNull(response.getModelMap().get("building"));
+
+        response = controller.getBeaconByMac("asdf");
+        assertNull(response.getModelMap().get("building"));
+    }
+}
